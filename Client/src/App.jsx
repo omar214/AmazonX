@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Navbar } from './components';
-import { Cart, Home, Orders, Login, Signup } from './pages';
+import { Cart, Home, Orders, Login, Signup, Product } from './pages';
 
 function App() {
 	return (
@@ -9,6 +9,7 @@ function App() {
 				<Navbar />
 				<Routes>
 					<Route index element={<Home />} />
+					<Route path="products/:id" element={<Product />} />
 					<Route path="cart" element={<Cart />} />
 					<Route path="login" element={<Login />} />
 					<Route path="signup" element={<Signup />} />
