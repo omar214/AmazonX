@@ -6,3 +6,4 @@ export { default as Login } from './Login.jsx';
 export { default as Signup } from './Signup.jsx';
 export { default as Shipping } from './Shipping.jsx';
 export { default as Payment } from './Payment.jsx';
+export { default as PlaceOrder } from './PlaceOrder.jsx';

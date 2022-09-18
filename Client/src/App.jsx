@@ -9,6 +9,7 @@ import {
 	Product,
 	Shipping,
 	Payment,
+	PlaceOrder,
 } from './pages';
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
 					<Route path="signup" element={<Signup />} />
 					<Route path="shipping" element={<Shipping />} />
 					<Route path="payment" element={<Payment />} />
+					<Route path="placeorder" element={<PlaceOrder />} />
 					<Route path="orders" element={<Orders />} />
 				</Routes>
 			</BrowserRouter>
