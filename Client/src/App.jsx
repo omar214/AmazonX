@@ -10,6 +10,7 @@ import {
 	Shipping,
 	Payment,
 	PlaceOrder,
+	Order,
 } from './pages';
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
 					<Route path="payment" element={<Payment />} />
 					<Route path="placeorder" element={<PlaceOrder />} />
 					<Route path="orders" element={<Orders />} />
+					<Route path="orders/:id" element={<Order />} />
 				</Routes>
 			</BrowserRouter>
 		</>
