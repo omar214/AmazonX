@@ -6,9 +6,7 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import Button from 'react-bootstrap/Button';
 import Image from 'react-bootstrap/Image';
 import Stack from 'react-bootstrap/Stack';
-import Badge from 'react-bootstrap/Badge';
 import data from '../data/data.js';
-import { Product } from '../components';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import AddBoxIcon from '@mui/icons-material/AddBox';
@@ -73,7 +71,9 @@ const Cart = () => {
 							<h4>Subtotal ({cartCount} items) : $0</h4>
 						</ListGroup.Item>
 						<ListGroup.Item className="p-4 d-flex justify-content-center">
-							<Button size="lg">Proceed To Check out</Button>
+							<Button size="lg" as={Link} to="/shipping">
+								Proceed To Check out
+							</Button>
 						</ListGroup.Item>
 					</ListGroup>
 				</Col>
