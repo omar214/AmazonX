@@ -13,7 +13,9 @@ const Review = ({ rating, numReviews }) => {
 	return (
 		<>
 			<span className="text-primary">{stars}</span>
-			<p className="text-primary">{numReviews} Reviews</p>
+			{numReviews !== -1 && (
+				<p className="text-primary">{numReviews ?? 0} Reviews</p>
+			)}
 		</>
 	);
 };
