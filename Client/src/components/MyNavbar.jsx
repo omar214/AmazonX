@@ -10,16 +10,23 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 
 function MyNavbar() {
-	const [user, setUser] = useState(true);
+	const [user, setUser] = useState(false);
 
 	const handleSearch = (e) => {
 		e.preventDefault();
 	};
 
 	return (
-		<Navbar collapseOnSelect expand="md" bg="dark" variant="dark">
+		<Navbar
+			collapseOnSelect
+			expand="md"
+			bg="dark"
+			variant="dark"
+			sticky="top"
+			className="mb-3"
+		>
 			<Container>
-				<Navbar.Brand as={Link} to="cart" className="text-primary">
+				<Navbar.Brand as={Link} to="/" className="text-primary">
 					Amazon Store
 				</Navbar.Brand>
 
@@ -51,7 +58,7 @@ function MyNavbar() {
 								<NavDropdown.Item>Log out</NavDropdown.Item>
 							</NavDropdown>
 						) : (
-							<Nav.Link as={Link} to="Register">
+							<Nav.Link as={Link} to="login">
 								Log in
 							</Nav.Link>
 						)}
