@@ -27,10 +27,10 @@ const Product = () => {
 		<Container>
 			{/* Product Details */}
 			<Row className="mb-4">
-				<Col md={6}>
+				<Col md={6} className="mb-5 mb-md-0">
 					<Image src={p.image} className="img-thumbnail" />
 				</Col>
-				<Col md={3}>
+				<Col md={3} className="">
 					<h2> {p.name} </h2>
 					<hr />
 					<Review rating={p.rating} numReviews={p.numReviews} />
@@ -41,10 +41,10 @@ const Product = () => {
 					<hr />
 					<Image
 						src={p.image}
-						className="img-thumbnail d-sm-none d-md-inline"
+						className="img-thumbnail d-none d-lg-inline"
 						width={'150px'}
 					/>
-					<hr className="d-sm-none d-md-block" />
+					<hr className="d-none d-md-block" />
 					Description :<p>{p.description}</p>
 				</Col>
 				<Col md={3}>
@@ -69,12 +69,16 @@ const Product = () => {
 								</Col>
 							</Row>
 						</ListGroup.Item>
+						<ListGroup.Item className="p-4 d-flex justify-content-center">
+							<Button size="lg">Add To Cart</Button>
+						</ListGroup.Item>
 					</ListGroup>
 				</Col>
 			</Row>
 
 			{/* Fetched Reviews */}
 			{/* TODO fetch reviews && make this component */}
+			<h2 className="mb-4"> Reviews </h2>
 			<ListGroup className="mb-3">
 				<ListGroup.Item>
 					<strong className="d-block">My Name</strong>
