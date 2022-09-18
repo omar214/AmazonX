@@ -1,6 +1,15 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Navbar } from './components';
-import { Cart, Home, Orders, Login, Signup, Product, Shipping } from './pages';
+import {
+	Cart,
+	Home,
+	Orders,
+	Login,
+	Signup,
+	Product,
+	Shipping,
+	Payment,
+} from './pages';
 
 function App() {
 	return (
@@ -14,6 +23,7 @@ function App() {
 					<Route path="login" element={<Login />} />
 					<Route path="signup" element={<Signup />} />
 					<Route path="shipping" element={<Shipping />} />
+					<Route path="payment" element={<Payment />} />
 					<Route path="orders" element={<Orders />} />
 				</Routes>
 			</BrowserRouter>
