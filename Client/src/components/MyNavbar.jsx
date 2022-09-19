@@ -33,7 +33,7 @@ function MyNavbar() {
 				<Navbar.Toggle aria-controls="responsive-navbar-nav" />
 
 				<Navbar.Collapse id="responsive-navbar-nav">
-					<Form className="d-flex" onSubmit={handleSearch}>
+					<Form className="d-flex mt-3 mt-md-0" onSubmit={handleSearch}>
 						<InputGroup>
 							<Form.Control placeholder="Search" />
 							<Button variant="primary">
