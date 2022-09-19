@@ -37,9 +37,6 @@ const updateUser = async (req, res, next) => {
 		if (!id || !mongoose.isValidObjectId(id))
 			return next(createError(401, 'valid id is required'));
 
-		if (req.userData.id !== id)
-			return next(createError(403, 'you can only update your email'));
-
 		let user = await User.findOne({ _id: id });
 		if (!user) return next(createError(404, 'user is not found '));
 		for (let key in req.body) {
@@ -57,8 +54,8 @@ const deleteUser = async (req, res, next) => {
 		if (!id || !mongoose.isValidObjectId(id))
 			return next(createError(401, 'valid id is required'));
 
-		if (req.userData.id !== id)
-			return next(createError(403, 'you can only delete your email'));
+		// if (req.userData.id !== id)
+		// 	return next(createError(403, 'you can only delete your email'));
 		let user = await User.findById(id);
 		if (!user) return next(createError(404, 'user not found'));
 

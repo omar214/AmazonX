@@ -20,6 +20,10 @@ const userSchema = new mongoose.Schema(
 			type: String,
 			default: 'https://robohash.org/YOUR-TEXT.png',
 		},
+		isAdmin: {
+			type: Boolean,
+			default: false,
+		},
 	},
 	{ timestamps: true },
 );

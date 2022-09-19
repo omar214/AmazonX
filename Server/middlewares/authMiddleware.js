@@ -16,5 +16,21 @@ const verifyAuth = (req, res, next) => {
 		next(err);
 	}
 };
+const verifyAdmin = (req, res, next) => {
+	const token = req.headers.authorization;
+	const JWT_KEY = config.JWT_PASSWORD;
 
-export default verifyAuth;
+	if (!token) next(createError(401, 'No token provided'));
+	try {
+		const decoded = jwt.verify(token, JWT_KEY);
+		if (decoded.isAdmin) {
+			next();
+		} else {
+			next(createError(404, 'you are not admin'));
+		}
+	} catch (err) {
+		next(err);
+	}
+};
+
+export { verifyAdmin, verifyAuth };
