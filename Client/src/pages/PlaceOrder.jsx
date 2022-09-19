@@ -1,12 +1,10 @@
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Alert from 'react-bootstrap/Alert';
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Button from 'react-bootstrap/Button';
 import Image from 'react-bootstrap/Image';
-import Stack from 'react-bootstrap/Stack';
 import data from '../data/data.js';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
@@ -25,7 +23,7 @@ const PlaceOrder = () => {
 
 			<h2 className="mb-4">Preview Order</h2>
 			<Row>
-				<Col sm={12} md={8}>
+				<Col lg={8}>
 					<Card className="mb-3">
 						<Card.Header>Shipping</Card.Header>
 						<Card.Body>
@@ -59,8 +57,8 @@ const PlaceOrder = () => {
 							<ListGroup variant="flush">
 								{data.products.map((p) => (
 									<ListGroup.Item>
-										<Row className="align-items-center">
-											<Col sm={4} className="me-1 ">
+										<Row className="align-items-center text-center text-md-left">
+											<Col md={4} className="me-1 ">
 												<Image
 													src={p.image}
 													className="img-thumbnail me-2"
@@ -70,22 +68,20 @@ const PlaceOrder = () => {
 												<Link to={`/products/${p.name}`}>{p.name}</Link>
 											</Col>
 
-											<Col sm={4} className="me-1 ">
-												<Stack direction="horizontal" gap={1}>
-													<Button size="sm" variant="light">
-														<RemoveIcon />
-													</Button>
-													{cartCount}
-													<Button size="sm" variant="light">
-														<AddBoxIcon />
-													</Button>
-												</Stack>
+											<Col md={4} className="me-1 ">
+												<Button size="sm" variant="light">
+													<AddBoxIcon />
+												</Button>
+												{cartCount}
+												<Button size="sm" variant="light">
+													<RemoveIcon />
+												</Button>
 											</Col>
 
 											<Col className="me-1 ">
-												<strong>{p.price}</strong>
+												<strong> $ {p.price}</strong>
 											</Col>
-											<Col className="me-1 ">
+											<Col>
 												<DeleteIcon />
 											</Col>
 										</Row>
@@ -100,10 +96,10 @@ const PlaceOrder = () => {
 					</Card>
 				</Col>
 
-				<Col sm={12} md={4} className="mt-2 mt-md-0">
+				<Col lg={4} className="mt-2 mt-md-0">
 					<Card>
+						<Card.Header>Order Summary</Card.Header>
 						<Card.Body>
-							<Card.Title>Order Summary</Card.Title>
 							<ListGroup variant="flush">
 								<ListGroup.Item className="mb-2">
 									<Row>
