@@ -4,18 +4,22 @@ import Alert from 'react-bootstrap/Alert';
 import Review from './Review.jsx';
 import { Link, useNavigate } from 'react-router-dom';
 import API from '../api/api.js';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setCartItems } from '../redux/cartSlice.js';
 import { useState } from 'react';
 
 const Product = ({ p }) => {
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
+	const { currentUser } = useSelector((state) => state.user);
+
 	const [buttonState, setButtonState] = useState({
 		loading: false,
 		error: '',
 	});
 
 	const handleAddToCart = (e) => {
+		!currentUser && navigate('/login');
 		const addToCartRequest = async () => {
 			setButtonState((prev) => ({ ...prev, loading: true }));
 			try {
@@ -28,7 +32,7 @@ const Product = ({ p }) => {
 				console.log(res.cart);
 			} catch (error) {
 				setButtonState({ error: error.message, loading: false });
-				console.log(error.message);
+				console.log(error);
 			}
 		};
 		addToCartRequest();
