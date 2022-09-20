@@ -1,17 +1,42 @@
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import Alert from 'react-bootstrap/Alert';
 import Review from './Review.jsx';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import API from '../api/api.js';
+import { useDispatch } from 'react-redux';
+import { setCartItems } from '../redux/cartSlice.js';
+import { useState } from 'react';
 
 const Product = ({ p }) => {
+	const dispatch = useDispatch();
+	const [buttonState, setButtonState] = useState({
+		loading: false,
+		error: '',
+	});
+
 	const handleAddToCart = (e) => {
-		// TODO
+		const addToCartRequest = async () => {
+			setButtonState((prev) => ({ ...prev, loading: true }));
+			try {
+				const item = { quantity: 1, product: p._id };
+				const { data: res } = await API.post('/cart', {
+					items: [item],
+				});
+				dispatch(setCartItems(res.cart));
+				setButtonState((prev) => ({ ...prev, loading: false }));
+				console.log(res.cart);
+			} catch (error) {
+				setButtonState({ error: error.message, loading: false });
+				console.log(error.message);
+			}
+		};
+		addToCartRequest();
 	};
 
 	return (
-		// <Link to={`/products/${p.slug}`}>
 		<Card>
-			<Link to={`/products/${p.slug}`}>
+			<Link to={`/products/${p._id}`}>
 				<Card.Img variant="top" src={p.image} />
 			</Link>
 
@@ -24,15 +49,27 @@ const Product = ({ p }) => {
 				</Card.Text>
 
 				{p.countInStock > 0 ? (
-					<Button variant="primary" onClick={handleAddToCart}>
-						Add To Cart
-					</Button>
+					<>
+						<Button variant="primary" onClick={handleAddToCart}>
+							Add To Cart
+						</Button>
+						{buttonState.loading ? (
+							<Alert variant="success" className="mt-2">
+								adding to Cart...
+							</Alert>
+						) : (
+							buttonState.error && (
+								<Alert variant="danger" className="mt-2">
+									error adding to Cart
+								</Alert>
+							)
+						)}
+					</>
 				) : (
 					<Card.Text className=" text-muted"> out of stock </Card.Text>
 				)}
 			</Card.Body>
 		</Card>
-		// </Link>
 	);
 };
 

@@ -1,6 +1,7 @@
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+import Badge from 'react-bootstrap/Badge';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -9,20 +10,39 @@ import SearchIcon from '@mui/icons-material/Search';
 import { useNavigate, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../redux/userSlice.js';
+import { clearCart, setCartItems } from '../redux/cartSlice.js';
+import { useEffect } from 'react';
+import API from '../api/api.js';
 
 function MyNavbar() {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const { currentUser } = useSelector((state) => state.user);
+	const { cartCount, cart } = useSelector((state) => state.cart);
+
+	useEffect(() => {
+		const fecthData = async () => {
+			try {
+				const { data: res } = await API.get('/cart');
+				dispatch(setCartItems(res.cart));
+			} catch (error) {
+				console.log(error.message);
+			}
+		};
+		if (currentUser) {
+			console.log('fetching cart');
+			fecthData();
+		}
+	}, [dispatch, currentUser]);
 
 	const handleSearch = (e) => {
 		e.preventDefault();
-		console.log(currentUser);
-		console.log('userasd');
+		// console.log(cartCount, cart);
 	};
 
 	const handleLogOut = (e) => {
 		dispatch(logout());
+		dispatch(clearCart());
 		navigate('/login');
 	};
 	return (
@@ -54,6 +74,11 @@ function MyNavbar() {
 					<Nav className="ms-auto">
 						<Nav.Link as={Link} to="cart">
 							Cart
+							{cartCount > 0 && (
+								<Badge pill bg="danger">
+									{cartCount}
+								</Badge>
+							)}
 						</Nav.Link>
 						{currentUser ? (
 							<NavDropdown
