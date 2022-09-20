@@ -6,16 +6,25 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup';
 import SearchIcon from '@mui/icons-material/Search';
-import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../redux/userSlice.js';
 
 function MyNavbar() {
-	const [user, setUser] = useState(false);
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
+	const { currentUser } = useSelector((state) => state.user);
 
 	const handleSearch = (e) => {
 		e.preventDefault();
+		console.log(currentUser);
+		console.log('userasd');
 	};
 
+	const handleLogOut = (e) => {
+		dispatch(logout());
+		navigate('/login');
+	};
 	return (
 		<Navbar
 			collapseOnSelect
@@ -46,8 +55,11 @@ function MyNavbar() {
 						<Nav.Link as={Link} to="cart">
 							Cart
 						</Nav.Link>
-						{user ? (
-							<NavDropdown title="UserName" id="collasible-nav-dropdown">
+						{currentUser ? (
+							<NavDropdown
+								title={currentUser.name}
+								id="collasible-nav-dropdown"
+							>
 								<NavDropdown.Item as={Link} to="user">
 									User Profile
 								</NavDropdown.Item>
@@ -55,7 +67,9 @@ function MyNavbar() {
 									Order History
 								</NavDropdown.Item>
 								<NavDropdown.Divider />
-								<NavDropdown.Item>Log out</NavDropdown.Item>
+								<NavDropdown.Item onClick={handleLogOut}>
+									Log out
+								</NavDropdown.Item>
 							</NavDropdown>
 						) : (
 							<Nav.Link as={Link} to="login">
