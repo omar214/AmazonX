@@ -10,8 +10,8 @@ const Home = () => {
 			<h2> Featured Products </h2>
 			<Row>
 				{/* TODO make dynamic products */}
-				{data.products.map((p) => (
-					<Col sm={6} md={4} lg={3} className="mb-3" key={p.slug}>
+				{data.products.map((p, idx) => (
+					<Col sm={6} md={4} lg={3} className="mb-3" key={idx}>
 						<Product p={p} />
 					</Col>
 				))}
