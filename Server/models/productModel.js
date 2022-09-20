@@ -26,7 +26,7 @@ const productSchema = new mongoose.Schema(
 			type: Number,
 			default: 5,
 			validate: {
-				validator: (value) => value > 0,
+				validator: (value) => value >= 0,
 				message: 'countInStock must be > 0',
 			},
 		},
