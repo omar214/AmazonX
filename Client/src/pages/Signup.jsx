@@ -5,9 +5,9 @@ import Row from 'react-bootstrap/Row';
 import Alert from 'react-bootstrap/Alert';
 import Col from 'react-bootstrap/Col';
 import { Link, useNavigate } from 'react-router-dom';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import API from '../api/api.js';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { loginStart, loginSuccess, loginFailure } from '../redux/userSlice.js';
 
 function Signup() {
@@ -15,7 +15,11 @@ function Signup() {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const [errorMessage, setErrorMessage] = useState([]);
+	const { currentUser } = useSelector((state) => state.user);
 
+	useEffect(() => {
+		currentUser && navigate('/');
+	}, [currentUser, navigate]);
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		let name = formRef.current.name.value.trim(),
