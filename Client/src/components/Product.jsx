@@ -53,22 +53,9 @@ const Product = ({ p }) => {
 				</Card.Text>
 
 				{p.countInStock > 0 ? (
-					<>
-						<Button variant="primary" onClick={handleAddToCart}>
-							Add To Cart
-						</Button>
-						{buttonState.loading ? (
-							<Alert variant="success" className="mt-2">
-								adding to Cart...
-							</Alert>
-						) : (
-							buttonState.error && (
-								<Alert variant="danger" className="mt-2">
-									error adding to Cart
-								</Alert>
-							)
-						)}
-					</>
+					<Button variant="primary" onClick={handleAddToCart}>
+						Add To Cart
+					</Button>
 				) : (
 					<Button variant="light" disabled className="text-muted">
 						out of stock

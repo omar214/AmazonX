@@ -1,7 +1,7 @@
 import Container from 'react-bootstrap/Container';
 import Table from 'react-bootstrap/Table';
 import Alert from 'react-bootstrap/Alert';
-import data from '../data/data.js';
+import Badge from 'react-bootstrap/Badge';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import API from '../api/api.js';
@@ -67,8 +67,28 @@ const Order = () => {
 										<td>
 											<strong>${p.totalPrice}</strong>
 										</td>
-										<td>{p.isPaid ? 'Yes' : 'No'}</td>
-										<td>{p.isDelivered ? 'Yes' : 'No'}</td>
+										<td>
+											{p.isPaid ? (
+												<Badge  bg="success">
+													Yes
+												</Badge>
+											) : (
+												<Badge  bg="danger">
+													No
+												</Badge>
+											)}
+										</td>
+										<td>
+											{p.isDelivered ? (
+												<Badge  bg="success">
+													Yes
+												</Badge>
+											) : (
+												<Badge  bg="danger">
+													No
+												</Badge>
+											)}
+										</td>
 										<td>
 											<Link to={`/orders/${p._id}`}>Details</Link>
 										</td>
