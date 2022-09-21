@@ -35,7 +35,7 @@ const Cart = () => {
 				console.log(error.message);
 			}
 		};
-		fecthCart();
+		currentUser && fecthCart();
 	}, [dispatch]);
 
 	const handleChangeQuantity = async (idx, num, productId) => {

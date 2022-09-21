@@ -7,7 +7,7 @@ import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
 import { CheckoutSteps } from '../components';
 import { useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setAddress } from '../redux/cartSlice.js';
 
@@ -17,6 +17,7 @@ const Shipping = () => {
 	const [errorMessage, setErrorMessage] = useState('');
 	const formRef = useRef(null);
 	const { address } = useSelector((state) => state.cart);
+	const { currentUser } = useSelector((state) => state.user);
 
 	const handleSubmitAddress = (e) => {
 		e.preventDefault();
@@ -44,53 +45,61 @@ const Shipping = () => {
 	};
 	return (
 		<Container>
-			<CheckoutSteps step1 step2 />
-			<Row className="justify-content-center mb-5">
-				<Col md={6}>
-					<h2 className="mb-3">Shipping Address</h2>
-					<Form onSubmit={handleSubmitAddress} ref={formRef}>
-						<FloatingLabel label="Country" className="mb-3">
-							<Form.Control
-								placeholder="enter country"
-								type="text"
-								defaultValue={address.country}
-								name="country"
-							/>
-						</FloatingLabel>
+			{!currentUser ? (
+				<Alert variant="info">
+					You Are not logged in <Link> Sign In</Link> To see your orders
+				</Alert>
+			) : (
+				<>
+					<CheckoutSteps step1 step2 />
+					<Row className="justify-content-center mb-5">
+						<Col md={6}>
+							<h2 className="mb-3">Shipping Address</h2>
+							<Form onSubmit={handleSubmitAddress} ref={formRef}>
+								<FloatingLabel label="Country" className="mb-3">
+									<Form.Control
+										placeholder="enter country"
+										type="text"
+										defaultValue={address.country}
+										name="country"
+									/>
+								</FloatingLabel>
 
-						<FloatingLabel label="City" className="mb-3">
-							<Form.Control
-								placeholder="enter city"
-								type="text"
-								defaultValue={address.city}
-								name="city"
-							/>
-						</FloatingLabel>
+								<FloatingLabel label="City" className="mb-3">
+									<Form.Control
+										placeholder="enter city"
+										type="text"
+										defaultValue={address.city}
+										name="city"
+									/>
+								</FloatingLabel>
 
-						<FloatingLabel label="Address" className="mb-3">
-							<Form.Control
-								placeholder="enter address"
-								type="text"
-								defaultValue={address.address}
-								name="address"
-							/>
-						</FloatingLabel>
+								<FloatingLabel label="Address" className="mb-3">
+									<Form.Control
+										placeholder="enter address"
+										type="text"
+										defaultValue={address.address}
+										name="address"
+									/>
+								</FloatingLabel>
 
-						<FloatingLabel label="Postal Code" className="mb-3">
-							<Form.Control
-								placeholder="enter postalCode"
-								type="text"
-								defaultValue={address.postalCode}
-								name="postalCode"
-							/>
-						</FloatingLabel>
+								<FloatingLabel label="Postal Code" className="mb-3">
+									<Form.Control
+										placeholder="enter postalCode"
+										type="text"
+										defaultValue={address.postalCode}
+										name="postalCode"
+									/>
+								</FloatingLabel>
 
-						{errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
+								{errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
 
-						<Button type="submit"> Submit</Button>
-					</Form>
-				</Col>
-			</Row>
+								<Button type="submit"> Submit</Button>
+							</Form>
+						</Col>
+					</Row>
+				</>
+			)}
 		</Container>
 	);
 };
