@@ -3,7 +3,7 @@ import StarHalfIcon from '@mui/icons-material/StarHalf';
 
 const Review = ({ rating, numReviews }) => {
 	const stars = [];
-	for (let i = 1; i < rating; i++) {
+	for (let i = 1; i <= rating; i++) {
 		stars.push(<StarIcon key={i} fontSize="small" />);
 	}
 	if (rating !== Math.floor(rating)) {
