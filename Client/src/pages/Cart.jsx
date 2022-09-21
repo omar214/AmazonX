@@ -151,10 +151,11 @@ const Cart = () => {
 								<ListGroup.Item className="p-sm-4 text-center mt-sm-4 mt-md-0">
 									<h4>
 										Subtotal ({cartCount} items) :{' '}
-										{cartItems.reduce(
-											(acc, item) => acc + item.product.price * item.quantity,
-											0,
-										)}
+										{cartItems &&
+											cartItems.reduce(
+												(acc, item) => acc + item.product.price * item.quantity,
+												0,
+											)}
 									</h4>
 								</ListGroup.Item>
 								<ListGroup.Item className="p-4 d-flex justify-content-center">
