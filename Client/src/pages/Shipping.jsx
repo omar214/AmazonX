@@ -21,21 +21,19 @@ const Shipping = () => {
 	const handleSubmitAddress = (e) => {
 		e.preventDefault();
 
-		let name = formRef.current.name.value.trim(),
-			address = formRef.current.address.value.trim(),
+		let address = formRef.current.address.value.trim(),
 			city = formRef.current.city.value.trim(),
 			postalCode = formRef.current.postalCode.value.trim(),
 			country = formRef.current.country.value.trim();
 
 		setErrorMessage('');
-		if (!name || !address || !city || !postalCode || !country) {
+		if (!address || !city || !postalCode || !country) {
 			setErrorMessage('missing field , Please Enter All Fields');
 			return;
 		}
 
 		dispatch(
 			setAddress({
-				name,
 				address,
 				postalCode,
 				city,
@@ -51,19 +49,11 @@ const Shipping = () => {
 				<Col md={6}>
 					<h2 className="mb-3">Shipping Address</h2>
 					<Form onSubmit={handleSubmitAddress} ref={formRef}>
-						<FloatingLabel label="Full Name" className="mb-3">
+						<FloatingLabel label="Country" className="mb-3">
 							<Form.Control
 								type="text"
-								name="name"
-								defaultValue={address.name}
-							/>
-						</FloatingLabel>
-
-						<FloatingLabel label="Address" className="mb-3">
-							<Form.Control
-								type="text"
-								defaultValue={address.address}
-								name="address"
+								defaultValue={address.country}
+								name="country"
 							/>
 						</FloatingLabel>
 
@@ -75,6 +65,14 @@ const Shipping = () => {
 							/>
 						</FloatingLabel>
 
+						<FloatingLabel label="Address" className="mb-3">
+							<Form.Control
+								type="text"
+								defaultValue={address.address}
+								name="address"
+							/>
+						</FloatingLabel>
+
 						<FloatingLabel label="Postal Code" className="mb-3">
 							<Form.Control
 								type="text"
@@ -83,13 +81,6 @@ const Shipping = () => {
 							/>
 						</FloatingLabel>
 
-						<FloatingLabel label="Country" className="mb-3">
-							<Form.Control
-								type="text"
-								defaultValue={address.country}
-								name="country"
-							/>
-						</FloatingLabel>
 						{errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
 
 						<Button type="submit"> Submit</Button>

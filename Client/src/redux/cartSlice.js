@@ -6,7 +6,6 @@ const getAddress = () => {
 		temp = JSON.parse(localStorage.getItem('address'));
 	} else {
 		temp = {
-			name: '',
 			address: '',
 			city: '',
 			country: '',
@@ -48,8 +47,12 @@ export const cartSlice = createSlice({
 		},
 		clearCart: (state) => {
 			localStorage.removeItem('cart');
+			localStorage.removeItem('paymentMethod');
+			localStorage.removeItem('address');
 			state.cart = null;
 			state.cartCount = 0;
+			state.address = getAddress();
+			state.paymentMethod = 'paypal';
 			state.address = getAddress();
 		},
 	},

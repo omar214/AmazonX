@@ -5,35 +5,82 @@ import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Button from 'react-bootstrap/Button';
 import Image from 'react-bootstrap/Image';
-import data from '../data/data.js';
-import { Link } from 'react-router-dom';
-import { useState } from 'react';
-import AddBoxIcon from '@mui/icons-material/AddBox';
-import RemoveIcon from '@mui/icons-material/Remove';
-import DeleteIcon from '@mui/icons-material/Delete';
+import { Link, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import CheckoutSteps from '../components/CheckoutSteps.jsx';
+import { useDispatch, useSelector } from 'react-redux';
+import API from '../api/api.js';
+import { clearCart } from '../redux/cartSlice.js';
 
 const PlaceOrder = () => {
-	const [cartCount, setCartCount] = useState(3);
-	const p = data.products[0];
+	const [orderDetails, setOrderDetails] = useState({});
+	const navigate = useNavigate();
+	const dispatch = useDispatch();
+	useEffect(() => {
+		const itemsPrice = cartItems.reduce(
+			(acc, item) => acc + item.product.price * item.quantity,
+			0,
+		);
+		const shipping = 0.05 * itemsPrice;
+		const tax = Math.floor(0.14 * itemsPrice);
+		const totalPrice = shipping + tax + itemsPrice;
 
+		setOrderDetails({
+			itemsPrice,
+			shipping,
+			tax,
+			totalPrice,
+		});
+	}, []);
+
+	const { currentUser } = useSelector((state) => state.user);
+	const {
+		address,
+		paymentMethod,
+		cart: { items: cartItems },
+	} = useSelector((state) => state.cart);
+
+	const handleCheckout = async (e) => {
+		try {
+			const sentAddress =
+				address.country + ' , ' + address.city + ', ' + address.address;
+			const { data: res } = await API.post('/cart/checkout', {
+				address: sentAddress,
+			});
+			console.log(res);
+			dispatch(clearCart());
+			navigate(`/orders/${res.order._id}`);
+		} catch (error) {
+			// dispatch(loginFailure('Invalid email or password'));
+			console.log(error);
+		}
+	};
 	return (
 		<Container className="pb-4">
 			<CheckoutSteps step1 step2 step3 step4 />
 
 			<h2 className="mb-4">Preview Order</h2>
 			<Row>
-				<Col lg={8}>
+				<Col sm={12} lg={8}>
 					<Card className="mb-3">
 						<Card.Header>Shipping</Card.Header>
 						<Card.Body>
 							<p>
-								<strong>Name :</strong> user Name
+								<strong>Name :</strong> {currentUser.name}
 							</p>
 							<p>
-								<strong>Address :</strong> user Address
+								<strong className="me-2">Address :</strong>
+								{address.country +
+									' , ' +
+									address.city +
+									', ' +
+									address.address}
 							</p>
-							<Card.Link as={Link} to="/shipping">
+							<Card.Link
+								as={Link}
+								to="/shipping"
+								// className="text-info"
+							>
 								Edit
 							</Card.Link>
 						</Card.Body>
@@ -43,9 +90,13 @@ const PlaceOrder = () => {
 						<Card.Header>Payment</Card.Header>
 						<Card.Body>
 							<p>
-								<strong>Method :</strong> Stripe
+								<strong>Method :</strong> {paymentMethod}
 							</p>
-							<Card.Link as={Link} to="/payment">
+							<Card.Link
+								as={Link}
+								to="/payment"
+								// className="text-info"
+							>
 								Edit
 							</Card.Link>
 						</Card.Body>
@@ -55,48 +106,48 @@ const PlaceOrder = () => {
 						<Card.Header>Items</Card.Header>
 						<Card.Body>
 							<ListGroup variant="flush">
-								{data.products.map((p) => (
+								{cartItems.map((p) => (
 									<ListGroup.Item>
 										<Row className="align-items-center text-center text-md-left">
 											<Col md={4} className="me-1 ">
 												<Image
-													src={p.image}
+													src={p.product.image}
 													className="img-thumbnail me-2"
 													rounded
 													width={'70px'}
 												/>
-												<Link to={`/products/${p.name}`}>{p.name}</Link>
-											</Col>
-
-											<Col md={4} className="me-1 ">
-												<Button size="sm" variant="light">
-													<AddBoxIcon />
-												</Button>
-												{cartCount}
-												<Button size="sm" variant="light">
-													<RemoveIcon />
-												</Button>
+												<Link
+													to={`/products/${p.product._id}`}
+													// className="text-info"
+												>
+													{p.product.name}
+												</Link>
 											</Col>
 
 											<Col className="me-1 ">
-												<strong> $ {p.price}</strong>
+												<strong>{p.quantity}</strong>
 											</Col>
-											<Col>
-												<DeleteIcon />
+
+											<Col className="">
+												<strong> $ {p.product.price}</strong>
 											</Col>
 										</Row>
 									</ListGroup.Item>
 								))}
 							</ListGroup>
 
-							<Card.Link as={Link} to="/cart">
+							<Card.Link
+								as={Link}
+								to="/cart"
+								// className="text-info"
+							>
 								Edit
 							</Card.Link>
 						</Card.Body>
 					</Card>
 				</Col>
 
-				<Col lg={4} className="mt-2 mt-md-0">
+				<Col sm={12} lg={4} className="mt-2 mt-md-0">
 					<Card>
 						<Card.Header>Order Summary</Card.Header>
 						<Card.Body>
@@ -104,29 +155,39 @@ const PlaceOrder = () => {
 								<ListGroup.Item className="mb-2">
 									<Row>
 										<Col>items</Col>
-										<Col className="ms-auto">$1351</Col>
+										<Col className="ms-auto">
+											<strong>${orderDetails.itemsPrice}</strong>
+										</Col>
 									</Row>
 								</ListGroup.Item>
 								<ListGroup.Item className="mb-2">
 									<Row>
 										<Col>shipping</Col>
-										<Col className="ms-auto">$10</Col>
+										<Col className="ms-auto ">
+											<strong>${orderDetails.shipping}</strong>
+										</Col>
 									</Row>
 								</ListGroup.Item>
 								<ListGroup.Item className="mb-2">
 									<Row>
 										<Col>Tax</Col>
-										<Col className="ms-auto">$30</Col>
+										<Col className="ms-auto">
+											<strong>${orderDetails.tax}</strong>
+										</Col>
 									</Row>
 								</ListGroup.Item>
 								<ListGroup.Item className="mb-2">
 									<Row>
 										<Col>Order Total</Col>
-										<Col className="ms-auto">$10</Col>
+										<Col className="ms-auto">
+											<strong>{orderDetails.totalPrice}</strong>
+										</Col>
 									</Row>
 								</ListGroup.Item>
 								<ListGroup.Item>
-									<Button size="lg">Place Order</Button>
+									<Button size="lg" onClick={handleCheckout}>
+										Place Order
+									</Button>
 								</ListGroup.Item>
 							</ListGroup>
 						</Card.Body>
