@@ -32,6 +32,10 @@ const orderSchema = new mongoose.Schema(
 			type: Boolean,
 			default: false,
 		},
+		paymentMethod: {
+			type: String,
+			default: 'paypal',
+		},
 		isDelivered: {
 			type: Boolean,
 			default: false,

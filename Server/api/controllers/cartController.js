@@ -105,7 +105,7 @@ const deleteItem = async (req, res, next) => {
 const checkout = async (req, res, next) => {
 	try {
 		const userId = req.userData.id;
-		const { address } = req.body;
+		const { address, paymentMethod } = req.body;
 
 		const cart = await Cart.findOne(
 			{ userId },
@@ -127,6 +127,7 @@ const checkout = async (req, res, next) => {
 		let order = new Order({
 			totalPrice,
 			address,
+			paymentMethod,
 			items: cart.items,
 			userId,
 			isPaid: false,
