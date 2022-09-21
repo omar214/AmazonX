@@ -13,7 +13,7 @@ const addReview = async (req, res, next) => {
 		if ((!name, !comment, !rating))
 			return next(400, `name & comment & rating is required`);
 
-		const product = await Product.findOne(productId);
+		const product = await Product.findById(productId);
 		if (!product) return next(createError(404, 'product  is not found '));
 
 		const review = new Review({

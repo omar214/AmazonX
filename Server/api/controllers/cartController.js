@@ -45,7 +45,17 @@ const getUserCart = async (req, res, next) => {
 	try {
 		const userId = req.userData.id;
 
-		const cart = await Cart.find({ userId });
+		const cart = await Cart.findOne(
+			{ userId },
+			{
+				items: 1,
+				_id: 0,
+			},
+		).populate({
+			path: 'items.product',
+			model: 'Product',
+			select: 'name price image countInStock',
+		});
 		res.status(200).json({
 			cart,
 		});
@@ -68,8 +78,32 @@ const deleteCart = async (req, res, next) => {
 	}
 };
 
+const deleteItem = async (req, res, next) => {
+	try {
+		const userId = req.userData.id;
+		const { productId } = req.body;
+
+		let cart = await Cart.findOne({ userId });
+		if (!cart) return next(createError(404, 'Cart not found'));
+
+		const productIdx = cart.items.findIndex((el) =>
+			el.product.equals(productId),
+		);
+		if (productIdx === -1)
+			return next(createError(404, 'product is not in cart'));
+
+		cart.items.splice(productIdx, 1);
+		await cart.save();
+
+		res.status(200).json('Item Removed');
+	} catch (error) {
+		next(error);
+	}
+};
+
 export default {
 	addToCart,
 	deleteCart,
 	getUserCart,
+	deleteItem,
 };
