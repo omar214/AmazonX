@@ -35,7 +35,7 @@ const Product = ({ p }) => {
 				console.log(error);
 			}
 		};
-		addToCartRequest();
+		currentUser && addToCartRequest();
 	};
 
 	return (

@@ -2,50 +2,77 @@ import Container from 'react-bootstrap/Container';
 import Badge from 'react-bootstrap/Badge';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Alert from 'react-bootstrap/Alert';
 import ListGroup from 'react-bootstrap/ListGroup';
-import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import data from '../data/data.js';
 import Image from 'react-bootstrap/Image';
 import Review from '../components/Review.jsx';
-import { useParams, Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import API from '../api/api.js';
+import { setCartItems } from '../redux/cartSlice.js';
+import Reviews from '../components/Reviews.jsx';
 
 const Product = () => {
 	const params = useParams();
-	const { id: productName } = params;
-	// TODO fetch product and import it dynamic
+	const { id: productId } = params;
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
 
-	const [user, setUser] = useState(false);
-	const p = data.products[0];
+	const { currentUser } = useSelector((state) => state.user);
+	const [proudct, setProudct] = useState({});
 
-	const handleSubmitReview = (e) => {
-		e.preventDefault();
+	useEffect(() => {
+		const fecthProduct = async () => {
+			try {
+				const { data: res } = await API.get(`/products/${productId}`);
+				setProudct(res.product);
+			} catch (error) {
+				console.log(error.message);
+			}
+		};
+		fecthProduct();
+	}, [productId]);
+
+	const handleAddToCart = (e) => {
+		!currentUser && navigate('/login');
+		const addToCartRequest = async () => {
+			try {
+				const item = { quantity: 1, product: productId };
+				const { data: res } = await API.post('/cart', {
+					items: [item],
+				});
+				dispatch(setCartItems(res.cart));
+				console.log(res.cart);
+			} catch (error) {
+				console.log(error);
+			}
+		};
+		currentUser && addToCartRequest();
 	};
 	return (
-		<Container>
+		<Container className="pb-4">
 			{/* Product Details */}
 			<Row className="mb-4">
 				<Col md={6} className="mb-5 mb-md-0">
-					<Image src={p.image} className="img-thumbnail" />
+					<Image src={proudct.image} className="img-thumbnail" />
 				</Col>
 				<Col md={3} className="">
-					<h2> {p.name} </h2>
+					<h2> {proudct.name} </h2>
 					<hr />
-					<Review rating={p.rating} numReviews={p.numReviews} />
+					<Review rating={proudct.rating} numReviews={proudct.numReviews} />
 					<hr />
 					<p>
-						<strong>${p.price}</strong>
+						<strong>${proudct.price}</strong>
 					</p>
 					<hr />
 					<Image
-						src={p.image}
+						src={proudct.image}
 						className="img-thumbnail d-none d-lg-inline"
 						width={'150px'}
 					/>
 					<hr className="d-none d-md-block" />
-					Description :<p>{p.description}</p>
+					Description :<p>{proudct.description}</p>
 				</Col>
 				<Col md={3}>
 					<ListGroup>
@@ -53,7 +80,7 @@ const Product = () => {
 							<Row>
 								<Col> Price :</Col>
 								<Col className="ms-auto">
-									<strong> ${p.price} </strong>
+									<strong> ${proudct.price} </strong>
 								</Col>
 							</Row>
 						</ListGroup.Item>
@@ -61,7 +88,7 @@ const Product = () => {
 							<Row>
 								<Col> Status :</Col>
 								<Col className="ms-auto">
-									{p.countInStock > 0 ? (
+									{proudct.countInStock > 0 ? (
 										<Badge bg="success">in Stock</Badge>
 									) : (
 										<Badge bg="danger">out of stock</Badge>
@@ -70,84 +97,16 @@ const Product = () => {
 							</Row>
 						</ListGroup.Item>
 						<ListGroup.Item className="p-4 d-flex justify-content-center">
-							<Button size="lg">Add To Cart</Button>
+							<Button size="lg" onClick={handleAddToCart}>
+								Add To Cart
+							</Button>
 						</ListGroup.Item>
 					</ListGroup>
 				</Col>
 			</Row>
 
-			{/* Fetched Reviews */}
-			{/* TODO fetch reviews && make this component */}
-			<h2 className="mb-4"> Reviews </h2>
-			<ListGroup className="mb-3">
-				<ListGroup.Item>
-					<strong className="d-block">My Name</strong>
-					<Review rating={4} numReviews={-1} />
-					<p>2022-06-22</p>
-					<p>
-						Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi a
-						tempora molestiae consequatur reprehenderit aperiam magni sunt est
-						pariatur velit!
-					</p>
-				</ListGroup.Item>
-				<ListGroup.Item>
-					<strong className="d-block">My Name</strong>
-					<Review rating={4} numReviews={-1} />
-					<p>2022-06-22</p>
-					<p>
-						Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi a
-						tempora molestiae consequatur reprehenderit aperiam magni sunt est
-						pariatur velit!
-					</p>
-				</ListGroup.Item>
-				<ListGroup.Item>
-					<strong className="d-block">My Name</strong>
-					<Review rating={4} numReviews={-1} />
-					<p>2022-06-22</p>
-					<p>
-						Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi a
-						tempora molestiae consequatur reprehenderit aperiam magni sunt est
-						pariatur velit!
-					</p>
-				</ListGroup.Item>
-			</ListGroup>
-
-			{/* Write Review */}
-			{user ? (
-				<>
-					<h2> Write Customer Review </h2>
-					<Form onSubmit={handleSubmitReview}>
-						<Form.Select aria-label="Default select example">
-							<option>Open this select menu</option>
-							<option value="1">1- Poor</option>
-							<option value="2">2- Fair</option>
-							<option value="3">3- Good</option>
-							<option value="4">4- Very Good</option>
-							<option value="5">5- Excellent</option>
-						</Form.Select>
-
-						<Form.Group
-							className="mb-3"
-							controlId="exampleForm.ControlTextarea1"
-						>
-							<Form.Label>Review </Form.Label>
-							<Form.Control
-								as="textarea"
-								rows={3}
-								placeholder="Write Your Review"
-							/>
-						</Form.Group>
-
-						<Button variant="primary" type="submit">
-							Submit
-						</Button>
-					</Form>
-				</>
-			) : (
-				<Alert variant="info">
-					Please <Link> Sign In</Link> to write a review
-				</Alert>
-			)}
+			{/* Reviews */}
+			<Reviews productId={productId} />
 		</Container>
 	);
 };
