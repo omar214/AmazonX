@@ -46,6 +46,7 @@ const PlaceOrder = () => {
 				address.country + ' , ' + address.city + ', ' + address.address;
 			const { data: res } = await API.post('/cart/checkout', {
 				address: sentAddress,
+				paymentMethod,
 			});
 			console.log(res);
 			dispatch(clearCart());

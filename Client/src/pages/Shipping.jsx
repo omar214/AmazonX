@@ -51,6 +51,7 @@ const Shipping = () => {
 					<Form onSubmit={handleSubmitAddress} ref={formRef}>
 						<FloatingLabel label="Country" className="mb-3">
 							<Form.Control
+								placeholder="enter country"
 								type="text"
 								defaultValue={address.country}
 								name="country"
@@ -59,6 +60,7 @@ const Shipping = () => {
 
 						<FloatingLabel label="City" className="mb-3">
 							<Form.Control
+								placeholder="enter city"
 								type="text"
 								defaultValue={address.city}
 								name="city"
@@ -67,6 +69,7 @@ const Shipping = () => {
 
 						<FloatingLabel label="Address" className="mb-3">
 							<Form.Control
+								placeholder="enter address"
 								type="text"
 								defaultValue={address.address}
 								name="address"
@@ -75,6 +78,7 @@ const Shipping = () => {
 
 						<FloatingLabel label="Postal Code" className="mb-3">
 							<Form.Control
+								placeholder="enter postalCode"
 								type="text"
 								defaultValue={address.postalCode}
 								name="postalCode"

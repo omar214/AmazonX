@@ -4,20 +4,47 @@ import Col from 'react-bootstrap/Col';
 import Alert from 'react-bootstrap/Alert';
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
-import Button from 'react-bootstrap/Button';
 import Image from 'react-bootstrap/Image';
-import Stack from 'react-bootstrap/Stack';
-import data from '../data/data.js';
-import { Link } from 'react-router-dom';
-import { useState } from 'react';
-import AddBoxIcon from '@mui/icons-material/AddBox';
-import RemoveIcon from '@mui/icons-material/Remove';
-import DeleteIcon from '@mui/icons-material/Delete';
-import CheckoutSteps from '../components/CheckoutSteps.jsx';
+import { Link, useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import API from '../api/api.js';
+import moment from 'moment';
 
-const PlaceOrder = () => {
-	const [cartCount, setCartCount] = useState(3);
-	const p = data.products[0];
+const Order = () => {
+	const params = useParams();
+	const { id: orderId } = params;
+	const { currentUser } = useSelector((state) => state.user);
+	const [orderDetails, setOrderDetails] = useState({});
+
+	useEffect(() => {
+		const fecthData = async () => {
+			try {
+				const { data: res } = await API.get(`/orders/${orderId}`);
+				setOrderDetails(res.order);
+
+				const itemsPrice = res.order.items.reduce(
+					(acc, item) => acc + item.product.price * item.quantity,
+					0,
+				);
+				const shipping = 0.05 * itemsPrice;
+				const tax = Math.floor(0.14 * itemsPrice);
+				const totalPrice = shipping + tax + itemsPrice;
+
+				setOrderDetails((prev) => ({
+					...prev,
+					itemsPrice,
+					shipping,
+					tax,
+					totalPrice,
+				}));
+				// console.log(res.order);
+			} catch (error) {
+				console.log(error.message);
+			}
+		};
+		fecthData();
+	}, [orderId]);
 
 	return (
 		<Container className="pb-4">
@@ -28,14 +55,19 @@ const PlaceOrder = () => {
 						<Card.Header>Shipping</Card.Header>
 						<Card.Body>
 							<p>
-								<strong>Name :</strong> user Name
+								<strong>Name :</strong> {currentUser.name}
 							</p>
 							<p>
-								<strong>Address :</strong> user Address
+								<strong>Address :</strong> {orderDetails.address}
 							</p>
-							<Alert variant="success">
-								Delivered at 2022-06-29T02:01:57.964Z
-							</Alert>
+							{orderDetails.isDeliverd ? (
+								<Alert variant="success">
+									Deliverd at{' '}
+									{moment(orderDetails.createdAt).format('MM/DD/YYYY')}
+								</Alert>
+							) : (
+								<Alert variant="danger">Not Paid Yet</Alert>
+							)}
 						</Card.Body>
 					</Card>
 
@@ -43,10 +75,15 @@ const PlaceOrder = () => {
 						<Card.Header>Payment</Card.Header>
 						<Card.Body>
 							<p>
-								<strong>Method :</strong> Stripe
+								<strong>Method :</strong> {orderDetails.paymentMethod}
 							</p>
-							<Alert variant="success">Paid at 2022-06-20T17:52:43.432Z</Alert>
-							<Alert variant="danger">Not Paid Yet</Alert>
+							{orderDetails.isPaid ? (
+								<Alert variant="success">
+									Paid at {moment(orderDetails.createdAt).format('MM/DD/YYYY')}
+								</Alert>
+							) : (
+								<Alert variant="danger">Not Paid Yet</Alert>
+							)}
 						</Card.Body>
 					</Card>
 
@@ -54,64 +91,77 @@ const PlaceOrder = () => {
 						<Card.Header>Items</Card.Header>
 						<Card.Body>
 							<ListGroup variant="flush">
-								{data.products.map((p) => (
-									<ListGroup.Item>
-										<Row className="align-items-center">
-											<Col sm={6} className="me-1 ">
-												<Image
-													src={p.image}
-													className="img-thumbnail me-2"
-													rounded
-													width="70px"
-												/>
-												<Link to={`/products/${p.name}`}>{p.name}</Link>
-											</Col>
+								{orderDetails &&
+									orderDetails.items &&
+									orderDetails.items.map((p) => (
+										<ListGroup.Item>
+											<Row className="align-items-center text-center text-md-left">
+												<Col md={5} className="me-1 ">
+													<Image
+														src={p.product.image}
+														className="img-thumbnail me-2"
+														rounded
+														width={'70px'}
+													/>
+													<Link
+														to={`/products/${p.product._id}`}
+														// className="text-info"
+													>
+														{p.product.name}
+													</Link>
+												</Col>
 
-											<Col sm={4} className="me-1 ">
-												{cartCount} item
-											</Col>
+												<Col className="me-1 ">
+													<strong>{p.quantity}</strong>
+												</Col>
 
-											<Col className="me-1 ">
-												<strong>{p.price}</strong>
-											</Col>
-										</Row>
-									</ListGroup.Item>
-								))}
+												<Col className="">
+													<strong> $ {p.product.price}</strong>
+												</Col>
+											</Row>
+										</ListGroup.Item>
+									))}
 							</ListGroup>
 						</Card.Body>
 					</Card>
 				</Col>
 
-				<Col md={4} className="mt-2 mt-md-0">
+				<Col sm={12} lg={4} className="mt-2 mt-md-0">
 					<Card>
+						<Card.Header>Order Summary</Card.Header>
 						<Card.Body>
-							<Card.Title>Order Summary</Card.Title>
 							<ListGroup variant="flush">
 								<ListGroup.Item className="mb-2">
 									<Row>
 										<Col>items</Col>
-										<Col className="ms-auto">$1351</Col>
+										<Col className="ms-auto">
+											<strong>
+												${orderDetails && orderDetails.itemsPrice}
+											</strong>
+										</Col>
 									</Row>
 								</ListGroup.Item>
 								<ListGroup.Item className="mb-2">
 									<Row>
 										<Col>shipping</Col>
-										<Col className="ms-auto">$10</Col>
+										<Col className="ms-auto ">
+											<strong>${orderDetails && orderDetails.shipping}</strong>
+										</Col>
 									</Row>
 								</ListGroup.Item>
 								<ListGroup.Item className="mb-2">
 									<Row>
 										<Col>Tax</Col>
-										<Col className="ms-auto">$30</Col>
+										<Col className="ms-auto">
+											<strong>${orderDetails && orderDetails.tax}</strong>
+										</Col>
 									</Row>
 								</ListGroup.Item>
 								<ListGroup.Item className="mb-2">
 									<Row>
-										<Col>
-											<strong> Order Total</strong>
-										</Col>
+										<Col>Order Total</Col>
 										<Col className="ms-auto">
-											<strong>$10</strong>
+											<strong>{orderDetails && orderDetails.totalPrice}</strong>
 										</Col>
 									</Row>
 								</ListGroup.Item>
@@ -124,4 +174,4 @@ const PlaceOrder = () => {
 	);
 };
 
-export default PlaceOrder;
+export default Order;
