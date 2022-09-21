@@ -97,9 +97,15 @@ const Product = () => {
 							</Row>
 						</ListGroup.Item>
 						<ListGroup.Item className="p-4 d-flex justify-content-center">
-							<Button size="lg" onClick={handleAddToCart}>
-								Add To Cart
-							</Button>
+							{proudct.countInStock > 0 ? (
+								<Button size="lg" onClick={handleAddToCart}>
+									Add To Cart
+								</Button>
+							) : (
+								<Button variant="light" disabled className="text-muted">
+									out of stock
+								</Button>
+							)}
 						</ListGroup.Item>
 					</ListGroup>
 				</Col>

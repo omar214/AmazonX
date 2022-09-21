@@ -70,7 +70,9 @@ const Product = ({ p }) => {
 						)}
 					</>
 				) : (
-					<Card.Text className=" text-muted"> out of stock </Card.Text>
+					<Button variant="light" disabled className="text-muted">
+						out of stock
+					</Button>
 				)}
 			</Card.Body>
 		</Card>
