@@ -16,5 +16,8 @@ router.use('/orders', orderRoute);
 router.use('/cart', cartRoute);
 router.use('/reviews', reviewRoute);
 router.use('/seed', seedRoute);
+router.use('/', (req, res) => {
+	res.json('this is api');
+});
 
 export default router;
