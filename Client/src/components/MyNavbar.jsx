@@ -18,7 +18,7 @@ function MyNavbar() {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const { currentUser } = useSelector((state) => state.user);
-	const { cartCount, cart } = useSelector((state) => state.cart);
+	const { cartCount } = useSelector((state) => state.cart);
 
 	useEffect(() => {
 		const fecthData = async () => {
@@ -30,7 +30,6 @@ function MyNavbar() {
 			}
 		};
 		if (currentUser) {
-			console.log('fetching cart');
 			fecthData();
 		}
 	}, [dispatch, currentUser]);
