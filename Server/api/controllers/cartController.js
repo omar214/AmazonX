@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import Cart from '../../models/cartModel.js';
+import Order from '../../models/orderModel.js';
 import createError from '../../utils/createError.js';
 
 const addToCart = async (req, res, next) => {
@@ -10,7 +11,7 @@ const addToCart = async (req, res, next) => {
 
 		const isFirst = !cart;
 		if (cart) {
-			console.log(cart.items);
+			// console.log(cart.items);
 			for (let item of items) {
 				const idx = cart.items.findIndex((el, idx) =>
 					el.product.equals(item.product),
@@ -101,9 +102,49 @@ const deleteItem = async (req, res, next) => {
 	}
 };
 
+const checkout = async (req, res, next) => {
+	try {
+		const userId = req.userData.id;
+		const { address } = req.body;
+
+		const cart = await Cart.findOne(
+			{ userId },
+			{
+				items: 1,
+				_id: 0,
+			},
+		).populate({
+			path: 'items.product',
+			model: 'Product',
+			select: 'price',
+		});
+		if (!cart) return next(createError(404, 'Cart not found'));
+
+		const totalPrice = cart.items.reduce(
+			(acc, item) => acc + item.product.price * item.quantity,
+			0,
+		);
+		let order = new Order({
+			totalPrice,
+			address,
+			items: cart.items,
+			userId,
+			isPaid: false,
+			isDelivered: false,
+		});
+		const savedOrder = await order.save();
+		res.status(200).json({ message: 'checkout done', order: savedOrder });
+
+		await Cart.deleteOne({ userId });
+	} catch (error) {
+		next(error);
+	}
+};
+
 export default {
 	addToCart,
 	deleteCart,
 	getUserCart,
 	deleteItem,
+	checkout,
 };
