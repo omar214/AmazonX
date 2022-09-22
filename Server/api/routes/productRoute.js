@@ -3,8 +3,8 @@ const router = express.Router();
 import productController from '../controllers/productController.js';
 import { verifyAuth, verifyAdmin } from '../../middlewares/authMiddleware.js';
 
-
 router.get('/', productController.getAllProducts);
+router.get('/search', productController.search);
 router.get('/:id', productController.getProductById);
 
 router.post('/', verifyAuth, verifyAdmin, productController.addProduct);
