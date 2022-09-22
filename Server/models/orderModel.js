@@ -44,6 +44,9 @@ const orderSchema = new mongoose.Schema(
 			type: String,
 			default: 'user address',
 		},
+		paidAt: {
+			type: Date,
+		},
 	},
 	{ timestamps: true },
 );

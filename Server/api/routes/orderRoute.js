@@ -12,5 +12,6 @@ router.delete('/:id', verifyAuth, verifyAdmin, orderController.deleteOrder);
 
 // not admin as i could pay & change it
 router.put('/:id', verifyAuth, orderController.editOrder);
+router.put('/:id/pay', verifyAuth, orderController.payOrder);
 
 export default router;

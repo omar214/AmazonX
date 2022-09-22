@@ -74,6 +74,27 @@ const editOrder = async (req, res, next) => {
 		next(error);
 	}
 };
+const payOrder = async (req, res, next) => {
+	try {
+		const id = req.params.id;
+		if (!id || !mongoose.isValidObjectId(id))
+			return next(createError(401, 'valid id is required'));
+
+		let order = await Order.findOne({ _id: id });
+		if (!order) return next(createError(404, 'order is not found '));
+
+		// not admin & not order owner
+		if (!order.userId.equals(req.userData.id) && !req.userData.isAdmin)
+			return next(createError(403, 'you can only update your order'));
+
+		order.isPaid = true;
+		order.paidAt = Date.now();
+		order = await order.save();
+		res.status(200).json({ message: 'order Paid Successfully', order });
+	} catch (error) {
+		next(error);
+	}
+};
 const getUserOrders = async (req, res, next) => {
 	try {
 		const userId = req.userData.id;
@@ -110,4 +131,5 @@ export default {
 	editOrder,
 	deleteOrder,
 	getUserOrders,
+	payOrder,
 };
