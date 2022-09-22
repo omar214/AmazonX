@@ -7,7 +7,7 @@ const Review = ({ rating, numReviews }) => {
 		stars.push(<StarIcon key={i} fontSize="small" />);
 	}
 	if (rating !== Math.floor(rating)) {
-		stars.push(<StarHalfIcon key={Math.floor(rating)} fontSize="small" />);
+		stars.push(<StarHalfIcon key={6} fontSize="small" />);
 	}
 
 	return (

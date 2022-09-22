@@ -8,3 +8,4 @@ export { default as Payment } from './Payment.jsx';
 export { default as PlaceOrder } from './PlaceOrder.jsx';
 export { default as Order } from './Order.jsx';
 export { default as Orders } from './Orders.jsx';
+export { default as UserProfile } from './UserProfile.jsx';

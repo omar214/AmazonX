@@ -71,7 +71,7 @@ const Product = () => {
 						className="img-thumbnail d-none d-lg-inline"
 						width={'150px'}
 					/>
-					<hr className="d-none d-md-block" />
+					<hr className="d-none d-lg-block" />
 					Description :<p>{proudct.description}</p>
 				</Col>
 				<Col md={3}>

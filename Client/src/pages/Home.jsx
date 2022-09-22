@@ -38,7 +38,7 @@ const Home = () => {
 					<Alert variant="danger">Error While fetching products</Alert>
 				) : (
 					products.items.map((p, idx) => (
-						<Col sm={6} md={4} lg={3} className="mb-3" key={idx}>
+						<Col sm={6} md={4} lg={3} className="mb-3" key={p._id}>
 							<Product p={p} />
 						</Col>
 					))

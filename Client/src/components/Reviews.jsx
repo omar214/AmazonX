@@ -61,8 +61,8 @@ const Reviews = ({ productId }) => {
 			<h2 className="mb-4"> Reviews </h2>
 			<ListGroup className="mb-3">
 				{reviews &&
-					reviews.map((r) => (
-						<ListGroup.Item>
+					reviews.map((r, idx) => (
+						<ListGroup.Item key={idx}>
 							<strong className="d-block">{r.name}</strong>
 							<Review rating={r.rating} numReviews={-1} />
 							<p>2022-06-22</p>
