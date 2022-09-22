@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { PayPalScriptProvider } from '@paypal/react-paypal-js';
 import { Navbar } from './components';
 import {
 	Cart,
@@ -15,7 +16,10 @@ import {
 
 function App() {
 	return (
-		<>
+		<PayPalScriptProvider
+			deferLoading={true}
+			options={{ 'client-id': process.env.REACT_APP_PAYPAL_CLIENT_ID }}
+		>
 			<BrowserRouter>
 				<Navbar />
 				<Routes>
@@ -31,7 +35,7 @@ function App() {
 					<Route path="orders/:id" element={<Order />} />
 				</Routes>
 			</BrowserRouter>
-		</>
+		</PayPalScriptProvider>
 	);
 }
 

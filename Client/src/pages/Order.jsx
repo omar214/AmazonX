@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import API from '../api/api.js';
 import moment from 'moment';
+import PaypalCheckoutButton from '../components/PaypalCheckoutButton.jsx';
 
 const Order = () => {
 	const params = useParams();
@@ -69,7 +70,7 @@ const Order = () => {
 									{orderDetails.isDeliverd ? (
 										<Alert variant="success">
 											Deliverd at{' '}
-											{moment(orderDetails.createdAt).format('MM/DD/YYYY')}
+											{moment(orderDetails.paidAt).format('MM/DD/YYYY')}
 										</Alert>
 									) : (
 										<Alert variant="danger">Not Paid Yet</Alert>
@@ -85,8 +86,7 @@ const Order = () => {
 									</p>
 									{orderDetails.isPaid ? (
 										<Alert variant="success">
-											Paid at{' '}
-											{moment(orderDetails.createdAt).format('MM/DD/YYYY')}
+											Paid at {moment(orderDetails.paidAt).format('MM/DD/YYYY')}
 										</Alert>
 									) : (
 										<Alert variant="danger">Not Paid Yet</Alert>
@@ -176,6 +176,20 @@ const Order = () => {
 												</Col>
 											</Row>
 										</ListGroup.Item>
+										{orderDetails.isPaid ? (
+											<></>
+										) : orderDetails.paymentMethod === 'paypal' ? (
+											<ListGroup.Item className="mb-2">
+												<PaypalCheckoutButton
+													items={orderDetails.items}
+													totalPrice={orderDetails.totalPrice}
+													orderId={orderId}
+													setOrderDetails={setOrderDetails}
+												/>
+											</ListGroup.Item>
+										) : (
+											<>stripe</>
+										)}
 									</ListGroup>
 								</Card.Body>
 							</Card>
