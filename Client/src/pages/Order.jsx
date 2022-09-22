@@ -171,7 +171,7 @@ const Order = () => {
 												<Col>Order Total</Col>
 												<Col className="ms-auto">
 													<strong>
-														{orderDetails && orderDetails.totalPrice}
+														${orderDetails && orderDetails.totalPrice}
 													</strong>
 												</Col>
 											</Row>

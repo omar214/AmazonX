@@ -1,5 +1,6 @@
 import Container from 'react-bootstrap/Container';
 import Table from 'react-bootstrap/Table';
+import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
 import Badge from 'react-bootstrap/Badge';
 import { Link } from 'react-router-dom';
@@ -47,9 +48,11 @@ const Order = () => {
 						<Table
 							hover
 							responsive
-							style={{ borderCollapse: 'separate', borderSpacing: '0 30px' }}
+							// style={{ borderCollapse: 'separate', borderSpacing: '0 30px' }}
 						>
-							<thead className="border-bottom border-5 border-dark">
+										<thead
+											className="border-bottom border-2 border-dark"
+										>
 								<tr>
 									<th>ID</th>
 									<th>DATE</th>
@@ -69,28 +72,23 @@ const Order = () => {
 										</td>
 										<td>
 											{p.isPaid ? (
-												<Badge  bg="success">
-													Yes
-												</Badge>
+												<Badge bg="success">Yes</Badge>
 											) : (
-												<Badge  bg="danger">
-													No
-												</Badge>
+												<Badge bg="danger">No</Badge>
 											)}
 										</td>
 										<td>
 											{p.isDelivered ? (
-												<Badge  bg="success">
-													Yes
-												</Badge>
+												<Badge bg="success">Yes</Badge>
 											) : (
-												<Badge  bg="danger">
-													No
-												</Badge>
+												<Badge bg="danger">No</Badge>
 											)}
 										</td>
 										<td>
-											<Link to={`/orders/${p._id}`}>Details</Link>
+											<Button as={Link} to={`/orders/${p._id}`} variant="light">
+												Details
+											</Button>
+											{/* <Link to={`/orders/${p._id}`}>Details</Link> */}
 										</td>
 									</tr>
 								))}
