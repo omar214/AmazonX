@@ -78,8 +78,8 @@ const Cart = () => {
 		<Container className="pb-4">
 			{!currentUser ? (
 				<Alert variant="info">
-					No Products in your Cart <Link> Sign In</Link> and add products to
-					your Cart
+					No Products in your Cart <Link to="/login"> Sign In</Link> and add
+					products to your Cart
 				</Alert>
 			) : (
 				<>

@@ -28,7 +28,7 @@ const Payment = () => {
 		<Container>
 			{!currentUser ? (
 				<Alert variant="info">
-					You Are not logged in <Link> Sign In</Link>
+					You Are not logged in <Link to="/login"> Sign In</Link>
 				</Alert>
 			) : (
 				<>

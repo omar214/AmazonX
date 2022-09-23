@@ -61,7 +61,7 @@ const PlaceOrder = () => {
 		<Container className="pb-4">
 			{!currentUser ? (
 				<Alert variant="info">
-					You Are not logged in <Link> Sign In</Link> To see your orders
+					You Are not logged in <Link to="/login"> Sign In</Link>
 				</Alert>
 			) : (
 				<>
