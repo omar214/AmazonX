@@ -101,6 +101,23 @@ function MyNavbar() {
 								Log in
 							</Nav.Link>
 						)}
+						{currentUser && currentUser.isAdmin && (
+							<NavDropdown title={'Admin'} id="Admin-nav-dropdown">
+								<NavDropdown.Item as={Link} to="admin/dashboard">
+									DASHBOARD
+								</NavDropdown.Item>
+								<NavDropdown.Divider />
+								<NavDropdown.Item as={Link} to="admin/orders">
+									ORDERS
+								</NavDropdown.Item>
+								<NavDropdown.Item as={Link} to="admin/products">
+									PRODUCTS
+								</NavDropdown.Item>
+								<NavDropdown.Item as={Link} to="admin/users">
+									USERS
+								</NavDropdown.Item>
+							</NavDropdown>
+						)}
 					</Nav>
 				</Navbar.Collapse>
 			</Container>

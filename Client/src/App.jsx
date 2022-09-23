@@ -14,6 +14,7 @@ import {
 	Order,
 	UserProfile,
 	Search,
+	AdminOrders,
 } from './pages';
 
 function App() {
@@ -37,6 +38,10 @@ function App() {
 					<Route path="orders" element={<Orders />} />
 					<Route path="orders/:id" element={<Order />} />
 					<Route path="search" element={<Search />} />
+					<Route path="admin/orders" element={<AdminOrders />} />
+					<Route path="admin/users" element={<div> users </div>} />
+					<Route path="admin/products" element={<div> all products </div>} />
+					<Route path="admin/dashboard" element={<div> Dashboard </div>} />
 				</Routes>
 			</BrowserRouter>
 		</PayPalScriptProvider>
