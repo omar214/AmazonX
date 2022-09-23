@@ -36,7 +36,8 @@ function MyNavbar() {
 
 	const handleSearch = (e) => {
 		e.preventDefault();
-		// console.log(cartCount, cart);
+		const category = e.target.search.value.trim() || 'all';
+		navigate(`/search?category=${category}`);
 	};
 
 	const handleLogOut = (e) => {
@@ -63,8 +64,8 @@ function MyNavbar() {
 				<Navbar.Collapse id="responsive-navbar-nav">
 					<Form className="d-flex mt-3 mt-md-0" onSubmit={handleSearch}>
 						<InputGroup>
-							<Form.Control placeholder="Search" />
-							<Button variant="primary">
+							<Form.Control placeholder="Search" name="search" />
+							<Button variant="primary" type="submit">
 								<SearchIcon />
 							</Button>
 						</InputGroup>
