@@ -5,6 +5,7 @@ import { verifyAuth, verifyAdmin } from '../../middlewares/authMiddleware.js';
 
 router.get('/', productController.getAllProducts);
 router.get('/search', productController.search);
+router.get('/categories', productController.getCategories);
 router.get('/:id', productController.getProductById);
 
 router.post('/', verifyAuth, verifyAdmin, productController.addProduct);

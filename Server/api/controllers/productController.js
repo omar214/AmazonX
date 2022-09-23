@@ -91,6 +91,18 @@ const deleteProduct = async (req, res, next) => {
 		next(error);
 	}
 };
+const getCategories = async (req, res, next) => {
+	try {
+		const categories = await Product.find().distinct('category');
+		res.status(200).json({
+			count: categories.length,
+			categories,
+		});
+	} catch (error) {
+		next(error);
+	}
+};
+
 const search = async (req, res, next) => {
 	try {
 		const PAGE_SIZE = 3;
@@ -183,5 +195,6 @@ export default {
 	getProductById,
 	editProduct,
 	deleteProduct,
+	getCategories,
 	search,
 };
