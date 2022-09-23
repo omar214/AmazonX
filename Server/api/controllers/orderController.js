@@ -22,7 +22,11 @@ const addOrder = async (req, res, next) => {
 
 const getAllOrders = async (req, res, next) => {
 	try {
-		const orders = await Order.find();
+		const orders = await Order.find().populate({
+			path: 'userId',
+			model: 'User',
+			select: 'name',
+		});
 		res.status(200).json({
 			count: orders.length,
 			orders,

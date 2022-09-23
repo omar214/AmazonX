@@ -5,7 +5,7 @@ import Alert from 'react-bootstrap/Alert';
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Image from 'react-bootstrap/Image';
-import { Link, useParams } from 'react-router-dom';
+import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import API from '../api/api.js';
@@ -14,6 +14,7 @@ import PaypalCheckoutButton from '../components/PaypalCheckoutButton.jsx';
 
 const Order = () => {
 	const params = useParams();
+	const navigate = useNavigate();
 	const { id: orderId } = params;
 	const { currentUser } = useSelector((state) => state.user);
 	const [orderDetails, setOrderDetails] = useState({});
@@ -45,17 +46,18 @@ const Order = () => {
 			}
 		};
 		currentUser && fecthData();
-	}, [orderId]);
+	}, [orderId, currentUser]);
 
 	return (
 		<Container className="pb-4">
 			{!currentUser ? (
 				<Alert variant="info">
-					You Are not logged in <Link> Sign In</Link> To see your orders
+					You Are not logged in <Link to="/login"> Sign In</Link> To see your
+					orders
 				</Alert>
 			) : (
 				<>
-					<h2 className="mb-4">Order 62b08e0416af30284 </h2>
+					<h2 className="mb-4">Order {orderDetails._id} </h2>
 					<Row>
 						<Col md={8}>
 							<Card className="mb-3">
@@ -176,7 +178,9 @@ const Order = () => {
 												</Col>
 											</Row>
 										</ListGroup.Item>
-										{orderDetails.isPaid ? (
+										{orderDetails.isPaid ||
+										(currentUser.isAdmin &&
+											currentUser._id !== orderDetails.userId) ? (
 											<></>
 										) : orderDetails.paymentMethod === 'paypal' ? (
 											<ListGroup.Item className="mb-2">
