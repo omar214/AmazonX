@@ -41,7 +41,7 @@ const updateUser = async (req, res, next) => {
 		let user = await User.findOne({ email });
 		let myUser = await User.findOne({ _id: id });
 
-		if (user && myUser.email !== email)
+		if (user && !user._id.equals(myUser._id) && user.email === email)
 			return next(createError(400, 'Email Already in use'));
 		if (!myUser) return next(createError(404, 'user is not found '));
 
