@@ -7,9 +7,9 @@ const Review = ({ rating, numReviews }) => {
 	return (
 		<>
 			{[1, 2, 3, 4, 5].map((idx) => (
-				<span className="text-primary">
+				<span className="text-primary" key={idx}>
 					{rating === idx - 0.5 ? (
-						<StarHalfIcon key={6} fontSize="small" />
+						<StarHalfIcon fontSize="small" />
 					) : rating >= idx ? (
 						<StarIcon fontSize="small" />
 					) : (
