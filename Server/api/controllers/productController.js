@@ -18,11 +18,12 @@ const addProduct = async (req, res, next) => {
 		// } = req.body;
 		let product;
 
-		const { name } = req.body;
+		let { name, image } = req.body;
 		product = await Product.findOne({ name });
 		if (product) return next(createError(409, 'product already exists'));
 
-		product = new Product({ ...req.body });
+		image = image || '/images/p1.jpg';
+		product = new Product({ ...req.body, image });
 		const savedProduct = await product.save();
 
 		res.status(200).json({

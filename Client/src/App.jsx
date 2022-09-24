@@ -17,6 +17,8 @@ import {
 	AdminOrders,
 	AdminUsers,
 	AdminUserEdit,
+	AdminProducts,
+	AdminProductEdit,
 } from './pages';
 
 function App() {
@@ -43,7 +45,8 @@ function App() {
 					<Route path="admin/orders" element={<AdminOrders />} />
 					<Route path="admin/users" element={<AdminUsers />} />
 					<Route path="admin/users/:id" element={<AdminUserEdit />} />
-					<Route path="admin/products" element={<div> all products </div>} />
+					<Route path="admin/products" element={<AdminProducts />} />
+					<Route path="admin/products/:id" element={<AdminProductEdit />} />
 					<Route path="admin/dashboard" element={<div> Dashboard </div>} />
 				</Routes>
 			</BrowserRouter>
