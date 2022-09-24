@@ -13,3 +13,5 @@ export { default as Search } from './Search.jsx';
 export { default as AdminOrders } from './AdminOrders.jsx';
 export { default as AdminUsers } from './AdminUsers.jsx';
 export { default as AdminUserEdit } from './AdminUserEdit.jsx';
+export { default as AdminProducts } from './AdminProducts.jsx';
+export { default as AdminProductEdit } from './AdminProductEdit.jsx';

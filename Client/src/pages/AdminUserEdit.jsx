@@ -48,7 +48,8 @@ const AdminUserEdit = () => {
 		<Container className="small-container">
 			<Row className="d-flex justify-content-center">
 				<Col sm={6}>
-					<h1>Edit User userId</h1>
+					<h1>Edit User </h1>
+					<p>{user._id}</p>
 
 					<Form onSubmit={submitHandler}>
 						<Form.Group className="mb-3" controlId="name">
