@@ -19,6 +19,7 @@ import {
 	AdminUserEdit,
 	AdminProducts,
 	AdminProductEdit,
+	Dashboard,
 } from './pages';
 
 function App() {
@@ -47,7 +48,7 @@ function App() {
 					<Route path="admin/users/:id" element={<AdminUserEdit />} />
 					<Route path="admin/products" element={<AdminProducts />} />
 					<Route path="admin/products/:id" element={<AdminProductEdit />} />
-					<Route path="admin/dashboard" element={<div> Dashboard </div>} />
+					<Route path="admin/dashboard" element={<Dashboard />} />
 				</Routes>
 			</BrowserRouter>
 		</PayPalScriptProvider>
