@@ -7,6 +7,7 @@ import { Product } from '../components';
 import { useEffect, useState } from 'react';
 import API from '../api/api.js';
 import CircularProgress from '@mui/material/CircularProgress';
+import { toast } from 'react-toastify';
 
 const Home = () => {
 	const [products, setProducts] = useState({
@@ -23,6 +24,8 @@ const Home = () => {
 				setProducts({ loading: false, error: false, items: res.products });
 			} catch (error) {
 				setProducts((prev) => ({ ...prev, loading: false, error: true }));
+				toast.dismiss();
+				toast.error('Error While Fetchig produtct');
 				console.log(error.message);
 			}
 		};

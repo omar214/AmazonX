@@ -5,6 +5,7 @@ import Alert from 'react-bootstrap/Alert';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Modal from 'react-bootstrap/Modal';
 import API from '../api/api.js';
+import { toast } from 'react-toastify';
 
 function AddProductModal({ handleClose, show, addProduct }) {
 	const formRef = useRef(null);
@@ -42,6 +43,7 @@ function AddProductModal({ handleClose, show, addProduct }) {
 			handleClose();
 		} catch (error) {
 			setErrorMessage('Error while Adding Product');
+			console.log('erro fetching cart');
 		}
 	};
 	return (

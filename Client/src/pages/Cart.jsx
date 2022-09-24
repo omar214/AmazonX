@@ -13,6 +13,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import API from '../api/api.js';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCartItems } from '../redux/cartSlice.js';
+import { toast } from 'react-toastify';
 
 const deepClone = (obj) => JSON.parse(JSON.stringify(obj));
 const Cart = () => {
@@ -33,6 +34,8 @@ const Cart = () => {
 				console.log(res.cart);
 			} catch (error) {
 				console.log(error.message);
+				toast.dismiss();
+				toast.error('Error While Fetchig cart');
 			}
 		};
 		currentUser && fecthCart();
@@ -73,7 +76,6 @@ const Cart = () => {
 		}
 	};
 
-	const handleCheckOut = async (e) => {};
 	return (
 		<Container className="pb-4">
 			{!currentUser ? (

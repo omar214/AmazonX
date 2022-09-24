@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import API from '../api/api.js';
+import { toast } from 'react-toastify';
 
 const Reviews = ({ productId }) => {
 	const { currentUser } = useSelector((state) => state.user);
@@ -40,6 +41,8 @@ const Reviews = ({ productId }) => {
 			formRef.current.reset();
 			console.log(res.review);
 		} catch (error) {
+			toast.dismiss();
+			toast.error('error while fetching Reviews');
 			console.log(error.message);
 		}
 	};
@@ -50,6 +53,8 @@ const Reviews = ({ productId }) => {
 				const { data: res } = await API.get(`/reviews/${productId}`);
 				setReviews(res.reviews);
 			} catch (error) {
+				toast.dismiss();
+				toast.error('Error While Fetching products');
 				console.log(error.message);
 			}
 		};

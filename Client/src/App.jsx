@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { PayPalScriptProvider } from '@paypal/react-paypal-js';
+import { ToastContainer } from 'react-toastify';
 import { Navbar } from './components';
 import {
 	Cart,
@@ -28,6 +29,13 @@ function App() {
 			deferLoading={true}
 			options={{ 'client-id': process.env.REACT_APP_PAYPAL_CLIENT_ID }}
 		>
+			<ToastContainer
+				position="bottom-center"
+				autoClose={5000}
+				hideProgressBar={false}
+				newestOnTop={false}
+				closeOnClick
+			/>
 			<div className="d-flex flex-column body">
 				<main>
 					<BrowserRouter>

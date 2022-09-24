@@ -6,6 +6,7 @@ import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 import API from '../api/api.js';
+import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 
 import { CircularProgress } from '@mui/material';
@@ -26,6 +27,8 @@ const Dashboard = () => {
 					summary: res,
 				});
 			} catch (err) {
+				toast.dismiss();
+				toast.error('Error While Fetchig dashboard');
 				setDashboardData({
 					loading: false,
 					error: true,

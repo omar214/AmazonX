@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setAddress } from '../redux/cartSlice.js';
 import API from '../api/api.js';
 import { loginSuccess } from '../redux/userSlice.js';
+import { toast } from 'react-toastify';
 
 const Shipping = () => {
 	const dispatch = useDispatch();
@@ -54,7 +55,10 @@ const Shipping = () => {
 			setIsSucess(true);
 
 			dispatch(loginSuccess(res.user));
-		} catch (error) {}
+		} catch (error) {
+			toast.dismiss();
+			toast.error('Error While editing user');
+		}
 	};
 	return (
 		<Container>

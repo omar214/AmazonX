@@ -30,6 +30,7 @@ const AdminProducts = () => {
 				setProducts({ loading: false, error: false, items: res.products });
 			} catch (error) {
 				setProducts((prev) => ({ ...prev, loading: false, error: true }));
+				
 				console.log(error.message);
 			}
 		};

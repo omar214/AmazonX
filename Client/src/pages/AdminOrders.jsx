@@ -11,6 +11,7 @@ import API from '../api/api.js';
 import { CircularProgress } from '@mui/material';
 import moment from 'moment';
 import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 
 const AdminOrders = () => {
 	const { currentUser } = useSelector((state) => state.user);
@@ -31,6 +32,8 @@ const AdminOrders = () => {
 			} catch (error) {
 				setOrders((prev) => ({ ...prev, loading: false, error: true }));
 				console.log(error.message);
+				toast.dismiss();
+				toast.error('Error While Fetching Orders');
 			}
 		};
 		currentUser && fecthData();
@@ -45,8 +48,12 @@ const AdminOrders = () => {
 				error: false,
 				items: filterd,
 			});
+			toast.dismiss();
+			toast.success('Order Deleted Successfully');
 		} catch (error) {
 			console.log(error.message);
+			toast.dismiss();
+			toast.error('Error While Deleting Order');
 		}
 	};
 	return (

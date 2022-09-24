@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import API from '../api/api.js';
 import { setCartItems } from '../redux/cartSlice.js';
 import Reviews from '../components/Reviews.jsx';
+import { toast } from 'react-toastify';
 
 const Product = () => {
 	const params = useParams();
@@ -29,6 +30,8 @@ const Product = () => {
 				setProudct(res.product);
 			} catch (error) {
 				console.log(error.message);
+				toast.dismiss();
+				toast.error('Error While Fetchig product');
 			}
 		};
 		fecthProduct();
@@ -43,9 +46,12 @@ const Product = () => {
 					items: [item],
 				});
 				dispatch(setCartItems(res.cart));
-				console.log(res.cart);
+				toast.dismiss();
+				toast.success('item added to cart succefully');
 			} catch (error) {
 				console.log(error);
+				toast.dismiss();
+				toast.error('Error While adding to cart');
 			}
 		};
 		currentUser && addToCartRequest();

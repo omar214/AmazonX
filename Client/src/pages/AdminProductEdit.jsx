@@ -8,6 +8,7 @@ import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import { useParams } from 'react-router-dom';
 import API from '../api/api.js';
+import { toast } from 'react-toastify';
 
 const AdminUserEdit = () => {
 	const params = useParams();
@@ -24,6 +25,8 @@ const AdminUserEdit = () => {
 				setProduct(res.product);
 			} catch (error) {
 				console.log(error.message);
+				toast.dismiss();
+				toast.error('Error Fetching Products');
 			}
 		};
 		fecthData();
@@ -54,8 +57,12 @@ const AdminUserEdit = () => {
 				// image,
 				brand,
 			});
+			toast.dismiss();
+			toast.success('Product Edited Succefully');
 			setSuccess(true);
 		} catch (error) {
+			toast.dismiss();
+			toast.error('Error while editing product');
 			console.log(error);
 		}
 	};

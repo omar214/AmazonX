@@ -9,6 +9,7 @@ import API from '../api/api.js';
 import { CircularProgress } from '@mui/material';
 import moment from 'moment';
 import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 
 const Order = () => {
 	const { currentUser } = useSelector((state) => state.user);
@@ -25,6 +26,8 @@ const Order = () => {
 				setOrders({ loading: false, error: false, items: res.orders });
 			} catch (error) {
 				setOrders((prev) => ({ ...prev, loading: false, error: true }));
+				toast.dismiss();
+				toast.error('Error While Fetchig orders');
 				console.log(error.message);
 			}
 		};

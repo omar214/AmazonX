@@ -13,12 +13,13 @@ import { logout } from '../redux/userSlice.js';
 import { clearCart, setCartItems } from '../redux/cartSlice.js';
 import { useEffect } from 'react';
 import API from '../api/api.js';
+import { toast } from 'react-toastify';
 
 function MyNavbar() {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const { currentUser } = useSelector((state) => state.user);
-	const { cartCount } = useSelector((state) => state.cart);
+	const { cart, cartCount } = useSelector((state) => state.cart);
 
 	useEffect(() => {
 		const fecthData = async () => {
@@ -26,7 +27,8 @@ function MyNavbar() {
 				const { data: res } = await API.get('/cart');
 				dispatch(setCartItems(res.cart));
 			} catch (error) {
-				console.log(error.message);
+				toast.dismiss();
+				console.log('erro fetching cart');
 			}
 		};
 		if (currentUser) {
@@ -76,7 +78,7 @@ function MyNavbar() {
 							Cart
 							{cartCount > 0 && (
 								<Badge pill bg="danger">
-									{cartCount}
+									{cart.items.reduce((acc, val) => val.quantity + acc, 0)}
 								</Badge>
 							)}
 						</Nav.Link>

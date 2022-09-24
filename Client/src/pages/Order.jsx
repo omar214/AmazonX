@@ -11,6 +11,7 @@ import { useSelector } from 'react-redux';
 import API from '../api/api.js';
 import moment from 'moment';
 import PaypalCheckoutButton from '../components/PaypalCheckoutButton.jsx';
+import { toast } from 'react-toastify';
 
 const Order = () => {
 	const params = useParams();
@@ -42,6 +43,8 @@ const Order = () => {
 				}));
 				// console.log(res.order);
 			} catch (error) {
+				toast.dismiss();
+				toast.error('Error While Fetchig order');
 				console.log(error.message);
 			}
 		};

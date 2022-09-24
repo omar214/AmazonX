@@ -7,6 +7,7 @@ import API from '../api/api.js';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCartItems } from '../redux/cartSlice.js';
 import { useState } from 'react';
+import { toast } from 'react-toastify';
 
 const Product = ({ p }) => {
 	const dispatch = useDispatch();
@@ -30,8 +31,12 @@ const Product = ({ p }) => {
 				dispatch(setCartItems(res.cart));
 				setButtonState((prev) => ({ ...prev, loading: false }));
 				console.log(res.cart);
+				toast.dismiss();
+				toast.success('item added to cart succefully');
 			} catch (error) {
 				setButtonState({ error: error.message, loading: false });
+				toast.dismiss();
+				toast.error('Error While adding to cart');
 				console.log(error);
 			}
 		};

@@ -11,6 +11,7 @@ import API from '../api/api.js';
 import { CircularProgress } from '@mui/material';
 import CancelSharpIcon from '@mui/icons-material/CancelSharp';
 import { prices, ratings, getSearchParams } from '../utils/searchUtils.js';
+import { toast } from 'react-toastify';
 
 const Search = () => {
 	const navigate = useNavigate();
@@ -35,6 +36,8 @@ const Search = () => {
 				setProducts({ loading: false, error: false, items: res.products });
 				setNumPages(res.pages);
 			} catch (error) {
+				toast.dismiss();
+				toast.error('Error While searching');
 				setProducts((prev) => ({ ...prev, loading: false, error: true }));
 				console.log(error.message);
 			}

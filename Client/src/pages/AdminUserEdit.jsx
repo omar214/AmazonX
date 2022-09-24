@@ -7,6 +7,7 @@ import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import { useNavigate, useParams } from 'react-router-dom';
 import API from '../api/api.js';
+import { toast } from 'react-toastify';
 
 const AdminUserEdit = () => {
 	const params = useParams();
@@ -20,6 +21,8 @@ const AdminUserEdit = () => {
 				const { data: res } = await API.get(`/users/${userId}`);
 				setUser(res.user);
 			} catch (error) {
+				toast.dismiss();
+				toast.error('Error While Fetchig users');
 				console.log(error.message);
 			}
 		};
@@ -41,6 +44,8 @@ const AdminUserEdit = () => {
 			});
 			setSuccess(true);
 		} catch (error) {
+			toast.dismiss();
+			toast.error('Error While editin user');
 			console.log(error);
 		}
 	};

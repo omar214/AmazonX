@@ -2,6 +2,7 @@ import { CircularProgress } from '@mui/material';
 import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js';
 import { useEffect } from 'react';
 import API from '../api/api.js';
+import { toast } from 'react-toastify';
 
 const PaypalCheckoutButton = ({ totalPrice, orderId, setOrderDetails }) => {
 	const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
@@ -19,6 +20,8 @@ const PaypalCheckoutButton = ({ totalPrice, orderId, setOrderDetails }) => {
 				],
 			})
 			.then((orderID) => {
+				toast.dismiss();
+				toast.success('Order Paid Successfully');
 				return orderID;
 			});
 	};
@@ -35,6 +38,8 @@ const PaypalCheckoutButton = ({ totalPrice, orderId, setOrderDetails }) => {
 	};
 	function onError(err) {
 		console.log(err);
+		toast.dismiss();
+		toast.error('error while paying Order');
 		// toast.error(getError(err));
 	}
 

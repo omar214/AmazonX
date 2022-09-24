@@ -12,6 +12,7 @@ import CheckoutSteps from '../components/CheckoutSteps.jsx';
 import { useDispatch, useSelector } from 'react-redux';
 import API from '../api/api.js';
 import { clearCart } from '../redux/cartSlice.js';
+import { toast } from 'react-toastify';
 
 const PlaceOrder = () => {
 	const [orderDetails, setOrderDetails] = useState({});
@@ -53,7 +54,8 @@ const PlaceOrder = () => {
 			dispatch(clearCart());
 			navigate(`/orders/${res.order._id}`);
 		} catch (error) {
-			// dispatch(loginFailure('Invalid email or password'));
+			toast.dismiss();
+			toast.error('Error While Fetchig users');
 			console.log(error);
 		}
 	};

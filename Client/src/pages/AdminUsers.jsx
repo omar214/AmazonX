@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import API from '../api/api.js';
 import { CircularProgress } from '@mui/material';
 import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 
 const AdminOrders = () => {
 	const { currentUser } = useSelector((state) => state.user);
@@ -29,6 +30,8 @@ const AdminOrders = () => {
 			} catch (error) {
 				setUsers((prev) => ({ ...prev, loading: false, error: true }));
 				console.log(error.message);
+				toast.dismiss();
+				toast.error('Error While Fetchig users');
 			}
 		};
 		currentUser && fecthData();
@@ -43,7 +46,11 @@ const AdminOrders = () => {
 				error: false,
 				items: filterd,
 			});
+			toast.dismiss();
+			toast.success('user deleted Successfully');
 		} catch (error) {
+			toast.dismiss();
+			toast.error('Error While deleting user');
 			console.log(error.message);
 		}
 	};
