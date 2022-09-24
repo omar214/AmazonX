@@ -6,6 +6,14 @@ body {
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }
+
+.body {
+	min-height: 100vh;
+}
+main {
+	flex: 1 0 auto;
+}
+
 $primary: #f0c040;
 $secondary: #f08000;
 /* import bootstrap to set changes */
