@@ -3,9 +3,9 @@ const router = express.Router();
 import orderController from '../controllers/orderController.js';
 import { verifyAuth, verifyAdmin } from '../../middlewares/authMiddleware.js';
 
-router.get('/', orderController.getAllOrders);
-router.get('/mine', verifyAuth, orderController.getUserOrders);
+router.get('/', verifyAuth, verifyAdmin, orderController.getAllOrders);
 router.get('/dashboard', verifyAuth, verifyAdmin, orderController.dashboard);
+router.get('/mine', verifyAuth, orderController.getUserOrders);
 router.get('/:id', orderController.getOrderById);
 
 router.post('/', verifyAuth, orderController.addOrder);
