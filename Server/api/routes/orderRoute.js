@@ -5,6 +5,7 @@ import { verifyAuth, verifyAdmin } from '../../middlewares/authMiddleware.js';
 
 router.get('/', orderController.getAllOrders);
 router.get('/mine', verifyAuth, orderController.getUserOrders);
+router.get('/dashboard', verifyAuth, verifyAdmin, orderController.dashboard);
 router.get('/:id', orderController.getOrderById);
 
 router.post('/', verifyAuth, orderController.addOrder);
