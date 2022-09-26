@@ -129,7 +129,10 @@ const Order = () => {
 													<Row className="align-items-center text-center text-md-left">
 														<Col md={5} className="me-1 ">
 															<Image
-																src={p.product.image}
+																src={
+																	process.env.REACT_APP_IMAGE_FOLDER +
+																	p.product.image
+																}
 																className="img-thumbnail me-2"
 																rounded
 																width={'70px'}

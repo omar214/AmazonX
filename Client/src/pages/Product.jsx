@@ -61,7 +61,10 @@ const Product = () => {
 			{/* Product Details */}
 			<Row className="mb-4">
 				<Col md={6} className="mb-5 mb-md-0">
-					<Image src={proudct.image} className="img-thumbnail" />
+					<Image
+						src={process.env.REACT_APP_IMAGE_FOLDER + proudct.image}
+						className="img-thumbnail"
+					/>
 				</Col>
 				<Col md={3} className="">
 					<h2> {proudct.name} </h2>
@@ -73,7 +76,7 @@ const Product = () => {
 					</p>
 					<hr />
 					<Image
-						src={proudct.image}
+						src={'http://localhost:8080/images/' + proudct.image}
 						className="img-thumbnail d-none d-lg-inline"
 						width={'150px'}
 					/>
