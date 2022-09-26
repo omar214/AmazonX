@@ -34,6 +34,7 @@ mongoose
 	});
 
 // Routes which should handle requests
+app.use('/images', express.static('upload/images'));
 app.use('/api', allRoutes);
 app.use(handleRouteError); // handle errors
 app.use('*', handleNotFound); // handle not found routes

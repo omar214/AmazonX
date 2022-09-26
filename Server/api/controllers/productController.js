@@ -5,21 +5,10 @@ import config from '../../config/index.js';
 
 const addProduct = async (req, res, next) => {
 	try {
-		// let {
-		// 	name,
-		// 	description,
-		// 	category,
-		// 	price,
-		// 	countInStock,
-		// 	image,
-		// 	brand,
-		// 	rating,
-		// 	numReviews,
-		// } = req.body;
-		let product;
+		let image = req.file.filename;
+		let { name } = req.body;
 
-		let { name, image } = req.body;
-		product = await Product.findOne({ name });
+		let product = await Product.findOne({ name });
 		if (product) return next(createError(409, 'product already exists'));
 
 		image = image || '/images/p1.jpg';
