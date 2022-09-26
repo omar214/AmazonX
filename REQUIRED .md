@@ -1,68 +1,16 @@
-## FE
-
 **Logic**;
 
-- [x] edit user profile
-
-- [x] filter & search
-
-  - [x] search route & controller
-  - [x] search page
-  - [x] track nav form & navigate
-
-- [ ] admin
-
-  - [ ] orders
-
-    - [x] order details
-    - [x] delete order
-      - [ ] could add pagination for them (not done)
-
-  - [ ] produts
-
-    - [ ] add product
-    - [ ] edit product
-    - [ ] delete product
-
-  - [ ] users
-
-    - [ ] edit user
-    - [ ] delete user
-
-  - [ ] dashboard
+- [ ] Readme
+- [ ] edit seed (users , products , orders , reviews)
 
 - [ ] map (put location )
 
-- [ ] add To cart
-
-  - [ ] default behaviour (could make redirect after adding)
-  - [ ] check count in stock
-  - [ ] navbar cartCount
-
-- [ ] payment method (missing stripe)
-
-  - [x] backend
-  - [x] front
-    - [x] paypal
-    - [ ] stripe
-
 ---
-
-## BE
 
 ## Delayed
 
-- [ ] footer
 - [ ] change page title using helmet
-
----
-
-- [ ] check auth & admin auth [ orders , products]
-- [ ] check cart responsive
-- [ ] when something requires sign in (after sign in make redirect)
-
----
-
+- [ ] handle categories as array
 - [ ] add more validations
 
 ## Done
@@ -78,11 +26,13 @@
 - [x] order history
 - [x] order details
 - [x] cart && placeorder responsive check
+- [x] toastify
 
 components
 
 - [x] navbar
 - [x] product card
+- [x] footer
 
 ---
 
@@ -115,7 +65,7 @@ components
   - [x] validate form
   - [x] send request
   - [x] store (token , user Data) in [localstorage , redux or reducer ]
-  - [ ] show user name in navbar (with frop down options && logout button logic)
+  - [x] show user name in navbar (with frop down options && logout button logic)
   - [x] prevent going to sign up when logged in
 
 - [x] home page
@@ -132,7 +82,7 @@ components
 
   - [x] fetch product
   - [x] add to cart logic (same as prev)
-  - [ ] fetch reviews
+  - [x] fetch reviews
   - [x] add review logic
     - [x] track form
     - [x] send request
@@ -163,3 +113,54 @@ components
   - [x] fetch orders only
 
 - [x] protect routes
+
+- [x] edit user profile
+
+- [x] filter & search
+
+  - [x] search route & controller
+  - [x] search page
+  - [x] track nav form & navigate
+
+- [x] admin
+
+  - [x] orders
+
+    - [x] order details
+    - [x] delete order
+      - [ ] could add pagination for them (not done)
+
+  - [x] users
+
+    - [x] fetch all users
+    - [x] delete user
+    - [x] edit user page
+      - [x] fetch details
+      - [x] edit request
+
+  - [x] produts
+
+    - [x] fetch products
+    - [x] delete product
+    - [x] add product
+    - [x] edit product
+
+  - [x] dashboard
+  - [x] Payment Method
+    - [x]backend
+    - [x] front
+      - [x] paypal
+      - [x] stripe
+
+- [x] add To cart
+
+  - [x] navbar cartCount
+  - [ ] check count in stock (not done)
+  - [ ] default behaviour (could make redirect after adding) (not done)
+
+- [x] Deliver Button (same place as paypal Button)
+- [x] add product image
+
+  - [x] API
+  - [x] handle product images (their url)
+  - [x] handle add product (as form data )

@@ -35,7 +35,7 @@ const StripeCheckoutButton = ({ totalPrice, orderId, setOrderDetails }) => {
 		<StripeCheckout
 			name="Amazon Store"
 			image="https://cdn.iconscout.com/icon/free/png-256/amazon-1869030-1583154.png"
-			description={`Your total is ${totalPrice * 100}`}
+			description={`Your total is ${totalPrice}`}
 			amount={totalPrice * 100}
 			token={onToken}
 			stripeKey={KEY}
