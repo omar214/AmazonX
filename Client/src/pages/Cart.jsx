@@ -40,7 +40,7 @@ const Cart = () => {
 			}
 		};
 		currentUser && fecthCart();
-	}, [dispatch]);
+	}, [dispatch, currentUser]);
 
 	const handleChangeQuantity = async (idx, num, productId) => {
 		let temp = deepClone(cartItems);

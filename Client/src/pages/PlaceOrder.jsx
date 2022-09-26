@@ -115,39 +115,40 @@ const PlaceOrder = () => {
 								<Card.Header>Items</Card.Header>
 								<Card.Body>
 									<ListGroup variant="flush">
-										{cartItems.map((p) => (
-											<ListGroup.Item>
-												<Row className="align-items-center text-center text-md-left">
-													<Col md={4} className="me-1 ">
-														{p && p.product && (
-															<Image
-																src={
-																	process.env.REACT_APP_IMAGE_FOLDER +
-																	p.product.image
-																}
-																className="img-thumbnail me-2"
-																rounded
-																width={'70px'}
-															/>
-														)}
-														<Link
-															to={`/products/${p.product._id}`}
-															// className="text-info"
-														>
-															{p.product.name}
-														</Link>
-													</Col>
+										{cartItems &&
+											cartItems.map((p, idx) => (
+												<ListGroup.Item key={idx}>
+													<Row className="align-items-center text-center text-md-left">
+														<Col md={4} className="me-1 ">
+															{p && p.product && (
+																<Image
+																	src={
+																		process.env.REACT_APP_IMAGE_FOLDER +
+																		p.product.image
+																	}
+																	className="img-thumbnail me-2"
+																	rounded
+																	width={'70px'}
+																/>
+															)}
+															<Link
+																to={`/products/${p.product._id}`}
+																// className="text-info"
+															>
+																{p.product.name}
+															</Link>
+														</Col>
 
-													<Col className="me-1 ">
-														<strong>{p.quantity}</strong>
-													</Col>
+														<Col className="me-1 ">
+															<strong>{p.quantity}</strong>
+														</Col>
 
-													<Col className="">
-														<strong> $ {p.product.price}</strong>
-													</Col>
-												</Row>
-											</ListGroup.Item>
-										))}
+														<Col className="">
+															<strong> $ {p.product.price}</strong>
+														</Col>
+													</Row>
+												</ListGroup.Item>
+											))}
 									</ListGroup>
 
 									<Card.Link
