@@ -290,3 +290,4 @@ https://user-images.githubusercontent.com/60351557/184158598-9c6b326f-ce85-41bb-
   - Add Product
 
     ![Add Product](./screenshots/responsive/10.png)
+
