@@ -3,7 +3,10 @@ import Order from '../../models/orderModel.js';
 import User from '../../models/userModel.js';
 import Product from '../../models/productModel.js';
 import createError from '../../utils/createError.js';
+import Stripe from 'stripe';
 import config from '../../config/index.js';
+
+const stripe = Stripe(config.STRIPE_SECRET_KEY);
 
 const addOrder = async (req, res, next) => {
 	try {
@@ -172,7 +175,31 @@ const dashboard = async (req, res, next) => {
 		next(error);
 	}
 };
+const stripePayment = async (req, res, next) => {
+	try {
+		const orderdId = req.params.id;
+		let order = await Order.findOne({ _id: orderdId });
+		if (!order) return next(createError(404, 'order is not found '));
 
+		const stripeRes = await stripe.charges.create({
+			source: req.body.tokenId,
+			amount: req.body.amount,
+			currency: 'usd',
+		});
+
+		order.isPaid = true;
+		order.paidAt = Date.now();
+		order = await order.save();
+		res.status(200).json({
+			message: 'Order Paid Successfully',
+			order,
+			// stripeRes,
+		});
+	} catch (error) {
+		console.log(error);
+		next(error);
+	}
+};
 export default {
 	addOrder,
 	getAllOrders,
@@ -182,4 +209,5 @@ export default {
 	getUserOrders,
 	payOrder,
 	dashboard,
+	stripePayment,
 };
