@@ -262,15 +262,24 @@ https://user-images.githubusercontent.com/60351557/184158598-9c6b326f-ce85-41bb-
 
   - Check out
 
-    ![Check out](./screenshots/responsive/5.png)
-    ![Check out](./screenshots/responsive/6.png)
-    ![Check out](./screenshots/responsive/7.png)
+  ![Check out](./screenshots/responsive/5.png)
+
+  <hr />
+
+  ![Check out](./screenshots/responsive/6.png)
+
+  <hr />
+
+  ![Check out](./screenshots/responsive/7.png)
 
   <hr />
 
   - DashBoard
 
     ![DashBoard](./screenshots/responsive/8.png)
+
+    <hr />
+
     ![DashBoard](./screenshots/responsive/9.png)
 
   <hr />
@@ -278,3 +287,4 @@ https://user-images.githubusercontent.com/60351557/184158598-9c6b326f-ce85-41bb-
   - Add Product
 
     ![Add Product](./screenshots/responsive/10.png)
+
