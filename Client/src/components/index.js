@@ -5,3 +5,4 @@ export { default as CheckoutSteps } from './CheckoutSteps.jsx';
 export { default as Reviews } from './Reviews.jsx';
 export { default as PaypalCheckoutButton } from './PaypalCheckoutButton.jsx';
 export { default as AddProductModal } from './AddProductModal.jsx';
+export { default as StripeCheckoutButton } from './StripeCheckoutButton.jsx';

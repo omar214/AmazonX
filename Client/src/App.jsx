@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { PayPalScriptProvider } from '@paypal/react-paypal-js';
+import Alert from 'react-bootstrap/Alert';
 import { ToastContainer } from 'react-toastify';
 import { Navbar } from './components';
 import {
@@ -61,6 +62,15 @@ function App() {
 							<Route path="admin/products" element={<AdminProducts />} />
 							<Route path="admin/products/:id" element={<AdminProductEdit />} />
 							<Route path="admin/dashboard" element={<Dashboard />} />
+							<Route
+								path="*"
+								element={
+									<Alert className="container" variant="danger">
+										{' '}
+										Error this route is wrong{' '}
+									</Alert>
+								}
+							/>
 						</Routes>
 					</BrowserRouter>
 				</main>

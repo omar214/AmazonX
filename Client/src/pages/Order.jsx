@@ -13,6 +13,7 @@ import API from '../api/api.js';
 import moment from 'moment';
 import PaypalCheckoutButton from '../components/PaypalCheckoutButton.jsx';
 import { toast } from 'react-toastify';
+import StripeCheckoutButton from '../components/StripeCheckoutButton.jsx';
 
 const Order = () => {
 	const params = useParams();
@@ -81,7 +82,7 @@ const Order = () => {
 				<>
 					<h2 className="mb-4">Order {orderDetails._id} </h2>
 					<Row>
-						<Col md={8}>
+						<Col sm={12} md={8}>
 							<Card className="mb-3">
 								<Card.Header>Shipping</Card.Header>
 								<Card.Body>
@@ -162,7 +163,7 @@ const Order = () => {
 							</Card>
 						</Col>
 
-						<Col sm={12} lg={4} className="mt-2 mt-md-0">
+						<Col sm={12} md={4} className="mt-2 mt-md-0">
 							<Card>
 								<Card.Header>Order Summary</Card.Header>
 								<Card.Body>
@@ -219,7 +220,13 @@ const Order = () => {
 												/>
 											</ListGroup.Item>
 										) : (
-											<>stripe</>
+											<ListGroup.Item className="mb-2">
+												<StripeCheckoutButton
+													totalPrice={orderDetails.totalPrice}
+													orderId={orderId}
+													setOrderDetails={setOrderDetails}
+												/>
+											</ListGroup.Item>
 										)}
 										{orderDetails.isPaid &&
 											!orderDetails.isDelivered &&
