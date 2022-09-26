@@ -1,4 +1,5 @@
 import Container from 'react-bootstrap/Container';
+import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Alert from 'react-bootstrap/Alert';
@@ -51,6 +52,24 @@ const Order = () => {
 		currentUser && fecthData();
 	}, [orderId, currentUser]);
 
+	const handleDeliver = async (e) => {
+		try {
+			const { data: res } = await API.put(`/orders/${orderId}`, {
+				isDelivered: true,
+				DeliveredAt: Date.now(),
+			});
+
+			setOrderDetails((prev) => ({
+				...prev,
+				isDelivered: true,
+				DeliveredAt: res.order.DeliveredAt,
+			}));
+		} catch (error) {
+			toast.dismiss();
+			toast.error('Error Deleivering Order');
+			console.log(error.message);
+		}
+	};
 	return (
 		<Container className="pb-4">
 			{!currentUser ? (
@@ -72,13 +91,13 @@ const Order = () => {
 									<p>
 										<strong>Address :</strong> {orderDetails.address}
 									</p>
-									{orderDetails.isDeliverd ? (
+									{orderDetails.isDelivered ? (
 										<Alert variant="success">
 											Deliverd at{' '}
-											{moment(orderDetails.paidAt).format('MM/DD/YYYY')}
+											{moment(orderDetails.DeliveredAt).format('MM/DD/YYYY')}
 										</Alert>
 									) : (
-										<Alert variant="danger">Not Paid Yet</Alert>
+										<Alert variant="danger">Not Delivered Yet</Alert>
 									)}
 								</Card.Body>
 							</Card>
@@ -105,8 +124,8 @@ const Order = () => {
 									<ListGroup variant="flush">
 										{orderDetails &&
 											orderDetails.items &&
-											orderDetails.items.map((p) => (
-												<ListGroup.Item>
+											orderDetails.items.map((p, idx) => (
+												<ListGroup.Item key={idx}>
 													<Row className="align-items-center text-center text-md-left">
 														<Col md={5} className="me-1 ">
 															<Image
@@ -197,6 +216,20 @@ const Order = () => {
 										) : (
 											<>stripe</>
 										)}
+										{orderDetails.isPaid &&
+											!orderDetails.isDelivered &&
+											currentUser.isAdmin && (
+												<ListGroup.Item className="mb-2">
+													<Button
+														className="container-fluid"
+														variant="success"
+														onClick={handleDeliver}
+													>
+														{' '}
+														Deliver{' '}
+													</Button>
+												</ListGroup.Item>
+											)}
 									</ListGroup>
 								</Card.Body>
 							</Card>
