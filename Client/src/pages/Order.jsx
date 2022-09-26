@@ -128,15 +128,17 @@ const Order = () => {
 												<ListGroup.Item key={idx}>
 													<Row className="align-items-center text-center text-md-left">
 														<Col md={5} className="me-1 ">
-															<Image
-																src={
-																	process.env.REACT_APP_IMAGE_FOLDER +
-																	p.product.image
-																}
-																className="img-thumbnail me-2"
-																rounded
-																width={'70px'}
-															/>
+															{p && p.product && (
+																<Image
+																	src={
+																		process.env.REACT_APP_IMAGE_FOLDER +
+																		p.product.image
+																	}
+																	className="img-thumbnail me-2"
+																	rounded
+																	width={'70px'}
+																/>
+															)}
 															<Link
 																to={`/products/${p.product._id}`}
 																// className="text-info"

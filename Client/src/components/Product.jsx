@@ -46,10 +46,12 @@ const Product = ({ p }) => {
 	return (
 		<Card>
 			<Link to={`/products/${p._id}`}>
-				<Card.Img
-					variant="top"
-					src={process.env.REACT_APP_IMAGE_FOLDER + p.image}
-				/>
+				{p && p.image && (
+					<Card.Img
+						variant="top"
+						src={process.env.REACT_APP_IMAGE_FOLDER + p.image}
+					/>
+				)}
 			</Link>
 
 			<Card.Body>

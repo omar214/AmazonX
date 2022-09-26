@@ -25,7 +25,7 @@ function MyNavbar() {
 		const fecthData = async () => {
 			try {
 				const { data: res } = await API.get('/cart');
-				dispatch(setCartItems(res.cart));
+				res.cart && dispatch(setCartItems(res.cart));
 			} catch (error) {
 				toast.dismiss();
 				console.log('erro fetching cart');

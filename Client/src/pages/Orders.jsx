@@ -65,8 +65,8 @@ const Order = () => {
 								</tr>
 							</thead>
 							<tbody>
-								{orders.items.map((p) => (
-									<tr className="mb-3">
+								{orders.items.map((p, idx) => (
+									<tr className="mb-3" key={idx}>
 										<td>{p._id}</td>
 										<td>{moment(p.createdAt).format('MM/DD/YYYY')}</td>
 										<td>

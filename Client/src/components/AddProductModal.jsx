@@ -19,25 +19,37 @@ function AddProductModal({ handleClose, show, addProduct }) {
 			price = formRef.current.price.value.trim(),
 			countInStock = formRef.current.countInStock.value.trim(),
 			category = formRef.current.category.value.trim(),
-			// image = formRef.current.image.value.trim(),
+			image = formRef.current.image.files[0],
 			brand = formRef.current.brand.value.trim();
 
 		setErrorMessage('');
-		if (!name || !description || !price || !countInStock || !category || !brand)
+		console.log(image);
+		if (
+			!name ||
+			!description ||
+			!price ||
+			!countInStock ||
+			!category ||
+			!brand ||
+			!image
+		)
 			return setErrorMessage('Please Enter All Fields');
 
 		try {
-			const { data: res } = await API.post('/products', {
-				name,
-				description,
-				price,
-				countInStock,
-				category,
-				// image,
-				brand,
+			let data = new FormData();
+			data.append('image', image); //<-- CHANGED .value to .files[0]
+			data.append('name', name);
+			data.append('description', description);
+			data.append('price', price);
+			data.append('countInStock', countInStock);
+			data.append('category', category);
+			data.append('brand', brand);
+
+			console.log('asd');
+			const { data: res } = await API.post('/products', data, {
+				'Content-Type': 'multipart/form-data',
 			});
 			console.log(res);
-
 			addProduct(res.product);
 			formRef.current.reset();
 			handleClose();
@@ -54,68 +66,76 @@ function AddProductModal({ handleClose, show, addProduct }) {
 				</Modal.Header>
 				<Modal.Body>
 					<Form onSubmit={handleAddProduct} ref={formRef}>
-						<FloatingLabel label="Name" className="mb-3">
+						<Form.Group className="mb-3">
+							<Form.Label> Name</Form.Label>
 							<Form.Control
 								required
 								placeholder="enter your name"
 								type="text"
 								name="name"
 							/>
-						</FloatingLabel>
+						</Form.Group>
 
-						<FloatingLabel label="Description" className="mb-3">
+						<Form.Group className="mb-3">
+							<Form.Label> Image</Form.Label>
+							<Form.Control
+								required
+								placeholder="enter Image"
+								type="file"
+								name="image"
+							/>
+						</Form.Group>
+
+						<Form.Group className="mb-3">
+							<Form.Label> Description</Form.Label>
 							<Form.Control
 								required
 								placeholder="enter Description"
 								type="text"
 								name="description"
 							/>
-						</FloatingLabel>
+						</Form.Group>
 
-						<FloatingLabel label="Price" className="mb-3">
+						<Form.Group className="mb-3">
+							<Form.Label> Price</Form.Label>
 							<Form.Control
 								required
 								placeholder="enter Price"
 								type="number"
 								name="price"
 							/>
-						</FloatingLabel>
+						</Form.Group>
 
-						<FloatingLabel label="count in stock" className="mb-3">
+						<Form.Group className="mb-3">
+							<Form.Label> count in stock</Form.Label>
 							<Form.Control
 								required
 								placeholder="enter count in stock"
-								type="price"
+								type="number"
 								name="countInStock"
 							/>
-						</FloatingLabel>
+						</Form.Group>
 
-						<FloatingLabel label="category" className="mb-3">
+						<Form.Group className="mb-3">
+							<Form.Label> category</Form.Label>
 							<Form.Control
 								required
 								placeholder="enter category"
 								type="text"
 								name="category"
 							/>
-						</FloatingLabel>
+						</Form.Group>
 
-						{/* <FloatingLabel label="Image" className="mb-3">
-							<Form.Control
-								required
-								placeholder="enter Image"
-								type="text"
-								name="image"
-							/>
-						</FloatingLabel> */}
-
-						<FloatingLabel label="Brand" className="mb-3">
+						<Form.Group className="mb-3">
+							<Form.Label> Brand</Form.Label>
 							<Form.Control
 								required
 								placeholder="enter Brand"
 								type="text"
 								name="brand"
 							/>
-						</FloatingLabel>
+						</Form.Group>
+
 						{errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
 					</Form>
 				</Modal.Body>
