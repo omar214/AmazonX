@@ -21,6 +21,7 @@ import {
 	AdminProducts,
 	AdminProductEdit,
 	Dashboard,
+	// Map,
 } from './pages';
 
 function App() {
@@ -53,6 +54,7 @@ function App() {
 							<Route path="orders" element={<Orders />} />
 							<Route path="orders/:id" element={<Order />} />
 							<Route path="search" element={<Search />} />
+							{/* <Route path="map" element={<Map />} /> */}
 							<Route path="admin/orders" element={<AdminOrders />} />
 							<Route path="admin/users" element={<AdminUsers />} />
 							<Route path="admin/users/:id" element={<AdminUserEdit />} />
