@@ -17,7 +17,7 @@
 
 ### 🚩About<a name = "about"></a>
 
-Amazon Store is a fully-functional Website that clones amazon website
+AmazonX is a fully-functional Website that clones amazon website
 It is a simple, yet powerful, application that allows you buy anything from our online store
 
 it`s a full mimic of Amazon with most of its features.
