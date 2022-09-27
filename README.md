@@ -3,7 +3,7 @@
 <!-- ![cover](./screenshots/cover.jpg) -->
 </div>
 
-# Amazon Store
+# AmazonX
 
 ## 📝 Table of Contents
 
