@@ -126,38 +126,32 @@ https://user-images.githubusercontent.com/60351557/192575420-c6dcc5ce-7ffa-474e-
 
 
 **Product Page & Cart & Checkout Steps**
+  
+  
 
 **Search Page**
 
+  
+  
 **Paypal payment & Deliver Logic**
 
+  
+  
 **Stripe Payment**
 
+  
+  
 **Admin Dashboard & Admin orders details**
 
-**Admin ( Edit & Add & Delete) Products**
+  
+  
+**Admin ( Edit & Add & Delete) Products** 
 
+  
+  
 **Admin ( Edit & Delete) Users**
 
-<!-- 
-https://user-images.githubusercontent.com/60351557/184158149-7402dd75-f7b5-4d95-a355-8f5ebdf2b0e0.mp4
-
-**Video page & comments** `enable video sound to hear the video`
-
-https://user-images.githubusercontent.com/60351557/184158296-466f230b-b596-496a-989e-2385c3795534.mp4
-
-**Saved videos & subscription & history**
-
-https://user-images.githubusercontent.com/60351557/184158448-28d3a6f1-a7ba-40ed-98d4-cf341b5d3cbf.mp4
-
-**Search**
-
-https://user-images.githubusercontent.com/60351557/184158546-1b5c8e29-08e0-4454-a1c4-d7730f327a90.mp4
-
-**uploading video & thumbnails**
-
-https://user-images.githubusercontent.com/60351557/184158598-9c6b326f-ce85-41bb-9837-0510e1ba4b74.mp4 
--->
+  
 
 </div>
 
