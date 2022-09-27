@@ -78,7 +78,7 @@ it`s a full mimic of Amazon with most of its features.
 1. **_Clone the repository_**
 
 ```bash
-git clone https://github.com/omar214/Amazon-store.git
+git clone https://github.com/omar214/AmazonX.git
 
 ```
 
